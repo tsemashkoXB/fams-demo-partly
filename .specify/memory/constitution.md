@@ -1,50 +1,74 @@
-# [PROJECT_NAME] Constitution
-<!-- Example: Spec Constitution, TaskFlow Constitution, etc. -->
+<!--
+Sync Impact Report
+- Version change: N/A (template) -> 1.0.0
+- Modified principles: N/A (template placeholders) -> I. TypeScript Strictness (No `any`), II. ESLint + Prettier,
+  III. No Automated Tests by Default, IV. Inline Form Validation, V. Clean Code & Structure
+- Added sections: Core Principles (filled), Technical Standards, Workflow & Quality Gates, Governance
+- Removed sections: None
+- Templates requiring updates:
+  - ✅ .specify/templates/plan-template.md
+  - ✅ .specify/templates/spec-template.md
+  - ✅ .specify/templates/tasks-template.md
+- Follow-up TODOs: None
+-->
+
+# SDD Partly Constitution
 
 ## Core Principles
 
-### [PRINCIPLE_1_NAME]
-<!-- Example: I. Library-First -->
-[PRINCIPLE_1_DESCRIPTION]
-<!-- Example: Every feature starts as a standalone library; Libraries must be self-contained, independently testable, documented; Clear purpose required - no organizational-only libraries -->
+### I. TypeScript Strictness (No `any`)
 
-### [PRINCIPLE_2_NAME]
-<!-- Example: II. CLI Interface -->
-[PRINCIPLE_2_DESCRIPTION]
-<!-- Example: Every library exposes functionality via CLI; Text in/out protocol: stdin/args → stdout, errors → stderr; Support JSON + human-readable formats -->
+All TypeScript MUST run with strict type checking enabled. `any` and
+`@ts-ignore` are forbidden; use explicit types and `unknown` with narrowing.
+Public APIs and reusable utilities MUST be typed.
 
-### [PRINCIPLE_3_NAME]
-<!-- Example: III. Test-First (NON-NEGOTIABLE) -->
-[PRINCIPLE_3_DESCRIPTION]
-<!-- Example: TDD mandatory: Tests written → User approved → Tests fail → Then implement; Red-Green-Refactor cycle strictly enforced -->
+### II. ESLint + Prettier (Non-Negotiable)
 
-### [PRINCIPLE_4_NAME]
-<!-- Example: IV. Integration Testing -->
-[PRINCIPLE_4_DESCRIPTION]
-<!-- Example: Focus areas requiring integration tests: New library contract tests, Contract changes, Inter-service communication, Shared schemas -->
+All code MUST conform to ESLint and Prettier. Linting and formatting MUST be
+configured in project scripts and run before delivery. No manual formatting or
+style deviations without an explicit rule change.
 
-### [PRINCIPLE_5_NAME]
-<!-- Example: V. Observability, VI. Versioning & Breaking Changes, VII. Simplicity -->
-[PRINCIPLE_5_DESCRIPTION]
-<!-- Example: Text I/O ensures debuggability; Structured logging required; Or: MAJOR.MINOR.BUILD format; Or: Start simple, YAGNI principles -->
+### III. No Automated Tests by Default
 
-## [SECTION_2_NAME]
-<!-- Example: Additional Constraints, Security Requirements, Performance Standards, etc. -->
+Do not add unit, integration, or e2e tests unless explicitly requested in the
+feature requirements. Do not introduce test frameworks or CI test steps without
+approval.
 
-[SECTION_2_CONTENT]
-<!-- Example: Technology stack requirements, compliance standards, deployment policies, etc. -->
+### IV. Inline Form Validation
 
-## [SECTION_3_NAME]
-<!-- Example: Development Workflow, Review Process, Quality Gates, etc. -->
+All user-facing forms MUST validate inline (on change/blur) with clear,
+field-level error messages. Validation logic MUST be centralized and reused
+across form fields.
 
-[SECTION_3_CONTENT]
-<!-- Example: Code review requirements, testing gates, deployment approval process, etc. -->
+### V. Clean Code & Structure
+
+Prioritize readability and maintainability: small focused modules, clear naming,
+no dead code, and minimal duplication. Keep concerns separated and avoid
+unnecessary abstractions.
+
+## Technical Standards
+
+- **Language**: TypeScript with strict compiler settings.
+- **Dependencies**: Install all required Node modules and maintain a lockfile.
+- **Tooling**: ESLint + Prettier are mandatory.
+- **Common Web Requirement**: Responsive design with semantic HTML, basic
+  accessibility (WCAG 2.1 AA target), and SEO-ready metadata.
+
+## Workflow & Quality Gates
+
+- **Constitution Check**: Every plan MUST include a gate verifying compliance
+  with the five core principles.
+- **Manual Verification**: Use a short manual QA checklist for key flows since
+  automated tests are excluded by default.
+- **Definition of Done**: Lint/format clean, inline validation complete, no
+  `any` usage, dependencies installed, and requirements met.
 
 ## Governance
-<!-- Example: Constitution supersedes all other practices; Amendments require documentation, approval, migration plan -->
 
-[GOVERNANCE_RULES]
-<!-- Example: All PRs/reviews must verify compliance; Complexity must be justified; Use [GUIDANCE_FILE] for runtime development guidance -->
+- This constitution supersedes conflicting guidance.
+- Amendments require updating this file, documenting rationale, and bumping the
+  version using semantic versioning (MAJOR/MINOR/PATCH).
+- Every plan/spec/tasks artifact MUST reference these principles and enforce
+  them via explicit checks.
 
-**Version**: [CONSTITUTION_VERSION] | **Ratified**: [RATIFICATION_DATE] | **Last Amended**: [LAST_AMENDED_DATE]
-<!-- Example: Version: 2.1.1 | Ratified: 2025-06-13 | Last Amended: 2025-07-16 -->
+**Version**: 1.0.0 | **Ratified**: 2026-01-19 | **Last Amended**: 2026-01-19
