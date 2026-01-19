@@ -1,0 +1,22 @@
+openapi: 3.0.3
+info:
+  title: FAMS Demo API
+  version: 1.0.0
+paths:
+  /health:
+    get:
+      summary: Health check
+      description: Returns API status for local development verification.
+      responses:
+        "200":
+          description: Service is healthy
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - status
+                properties:
+                  status:
+                    type: string
+                    example: ok
