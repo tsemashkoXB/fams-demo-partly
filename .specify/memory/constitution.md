@@ -51,15 +51,13 @@ unnecessary abstractions.
 - **Language**: TypeScript with strict compiler settings.
 - **Dependencies**: Install all required Node modules and maintain a lockfile.
 - **Tooling**: ESLint + Prettier are mandatory.
-- **Common Web Requirement**: Responsive design with semantic HTML, basic
-  accessibility (WCAG 2.1 AA target), and SEO-ready metadata.
+- **Common Web Requirement**: Responsive design with semantic HTML and basic
+  accessibility (WCAG 2.1 AA target).
 
 ## Workflow & Quality Gates
 
 - **Constitution Check**: Every plan MUST include a gate verifying compliance
   with the five core principles.
-- **Manual Verification**: Use a short manual QA checklist for key flows since
-  automated tests are excluded by default.
 - **Definition of Done**: Lint/format clean, inline validation complete, no
   `any` usage, dependencies installed, and requirements met.
 

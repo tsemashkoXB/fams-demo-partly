@@ -44,7 +44,9 @@
 - [ ] T016 Create base app shell layout in `frontend/src/components/layout/app-shell.tsx`
 - [ ] T017 Add shared header container in `frontend/src/components/layout/header.tsx`
 - [ ] T018 Add shared sidebar container in `frontend/src/components/layout/sidebar.tsx`
-- [ ] T019 Apply app shell in `frontend/src/app/layout.tsx`
+- [ ] T019 Add app title and neutral icon in sidebar title area in `frontend/src/components/layout/sidebar.tsx`
+- [ ] T020 Set app metadata title in `frontend/src/app/layout.tsx`
+- [ ] T021 Apply app shell in `frontend/src/app/layout.tsx`
 
 **Checkpoint**: Foundation ready - user story implementation can now begin in parallel
 
@@ -58,10 +60,11 @@
 
 ### Implementation for User Story 1
 
-- [ ] T020 [P] [US1] Create route files for five pages in `frontend/src/app/vehicles/page.tsx`, `frontend/src/app/users/page.tsx`, `frontend/src/app/scheduler/page.tsx`, `frontend/src/app/radar/page.tsx`, `frontend/src/app/statistics/page.tsx`
-- [ ] T021 [US1] Render empty page content shells in each page file listed in `frontend/src/app/*/page.tsx`
-- [ ] T022 [US1] Implement sidebar navigation links and active state styles in `frontend/src/components/layout/sidebar.tsx`
-- [ ] T023 [US1] Set default landing page to Vehicles in `frontend/src/app/page.tsx`
+- [ ] T022 [P] [US1] Create route files for five pages in `frontend/src/app/vehicles/page.tsx`, `frontend/src/app/users/page.tsx`, `frontend/src/app/scheduler/page.tsx`, `frontend/src/app/radar/page.tsx`, `frontend/src/app/statistics/page.tsx`
+- [ ] T023 [US1] Render empty page content shells in each page file listed in `frontend/src/app/*/page.tsx`
+- [ ] T024 [US1] Implement sidebar navigation links with pathname-based active state in `frontend/src/components/layout/sidebar.tsx`
+- [ ] T025 [US1] Add distinct nav item icons in `frontend/src/lib/nav.ts` and render them in `frontend/src/components/layout/sidebar.tsx`
+- [ ] T026 [US1] Set default landing page to Vehicles in `frontend/src/app/page.tsx`
 
 **Checkpoint**: User Story 1 is fully functional and testable independently
 
@@ -75,9 +78,9 @@
 
 ### Implementation for User Story 2
 
-- [ ] T024 [US2] Add collapsed state handling in `frontend/src/components/layout/app-shell.tsx`
-- [ ] T025 [US2] Implement title click toggle in `frontend/src/components/layout/sidebar.tsx`
-- [ ] T026 [US2] Add collapsed styles and icon-only mode in `frontend/src/components/layout/sidebar.tsx`
+- [ ] T027 [US2] Add collapsed state handling in `frontend/src/components/layout/app-shell.tsx`
+- [ ] T028 [US2] Implement title click toggle in `frontend/src/components/layout/sidebar.tsx`
+- [ ] T029 [US2] Add collapsed styles, icon-only mode, and safe rapid toggling in `frontend/src/components/layout/sidebar.tsx`
 
 **Checkpoint**: User Stories 1 and 2 work together without regressions
 
@@ -91,9 +94,9 @@
 
 ### Implementation for User Story 3
 
-- [ ] T027 [US3] Add mock user avatar display in `frontend/src/components/layout/header.tsx`
-- [ ] T028 [US3] Add alerts icon display in `frontend/src/components/layout/header.tsx`
-- [ ] T029 [US3] Style header elements with shadcn/ui components in `frontend/src/components/layout/header.tsx`
+- [ ] T030 [US3] Add mock user avatar display with random photo and circular crop in `frontend/src/components/layout/header.tsx`
+- [ ] T031 [US3] Add alerts icon display in `frontend/src/components/layout/header.tsx`
+- [ ] T032 [US3] Style header elements with shadcn/ui components in `frontend/src/components/layout/header.tsx`
 
 **Checkpoint**: All user stories are independently functional
 
@@ -103,9 +106,10 @@
 
 **Purpose**: Improvements that affect multiple user stories
 
-- [ ] T030 [P] Apply consistent shadows and accent buttons across layout in `frontend/src/styles/globals.css`
-- [ ] T031 [P] Align sidebar colors with palette in `frontend/src/components/layout/sidebar.tsx`
-- [ ] T032 Update quickstart instructions if scaffolded outputs differ in `specs/001-fams-demo-app/quickstart.md`
+- [ ] T033 [P] Apply consistent shadows and accent buttons across layout in `frontend/src/styles/globals.css`
+- [ ] T034 [P] Align sidebar colors with palette in `frontend/src/components/layout/sidebar.tsx`
+- [ ] T035 Verify no auth routes or prompts are included in `frontend/src/app/` and `frontend/src/components/`
+- [ ] T036 Update quickstart instructions if scaffolded outputs differ in `specs/001-fams-demo-app/quickstart.md`
 
 ---
 
@@ -134,8 +138,8 @@
 
 - T003-T007 can run in parallel after T001/T002
 - T008-T012 can run in parallel after setup
-- T013-T018 can run in parallel after setup
-- T020 can run in parallel with T022 once foundation is ready
+- T013-T019 can run in parallel after setup
+- T022 can run in parallel with T024 once foundation is ready
 
 ---
 
@@ -143,7 +147,7 @@
 
 ```bash
 Task: "Create route files for five pages in frontend/src/app/vehicles/page.tsx, frontend/src/app/users/page.tsx, frontend/src/app/scheduler/page.tsx, frontend/src/app/radar/page.tsx, frontend/src/app/statistics/page.tsx"
-Task: "Implement sidebar navigation links and active state styles in frontend/src/components/layout/sidebar.tsx"
+Task: "Implement sidebar navigation links with pathname-based active state in frontend/src/components/layout/sidebar.tsx"
 ```
 
 ---

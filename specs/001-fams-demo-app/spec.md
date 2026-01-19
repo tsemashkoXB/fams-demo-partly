@@ -102,15 +102,14 @@ the requested mock elements.
 
 - **SC-001**: Users can reach any of the five pages from the landing view in two
   clicks or fewer.
-- **SC-002**: Sidebar collapse/expand completes within 1 second in 95% of manual
-  checks.
 - **SC-003**: All five pages load with the shared sidebar and header visible and
   an empty content area.
 - **SC-004**: No authentication prompts appear during the demo flow.
 
 ## Assumptions
 
-- Desktop-only layouts are sufficient for the demo.
+- Desktop-only layouts are sufficient for the demo; layout containers should be
+  fluid within desktop widths, but no mobile breakpoints are required.
 - Page content areas remain empty at this stage.
 
 ## Dependencies
