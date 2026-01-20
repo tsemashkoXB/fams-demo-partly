@@ -92,7 +92,9 @@ Any user adds a new vehicle using the same form, or deletes a vehicle after conf
 - **FR-009**: The documentation section MUST include vehicle passport, passport issued date, insurance, insurance expiry date, next service mileage, next service date, and state inspection expiry date arranged in three columns.
 - **FR-010**: The system MUST show warning messages when thresholds are met (exclusive): less than 1000 km to next service, less than 30 days to next service, less than 30 days to next technical inspection, less than 30 days before insurance expiry, and less than 30 days before state inspection expiry.
 - **FR-011**: Clicking Edit MUST enable editing for all fields, darken the rest of the page, and disable the Add Car and Edit buttons.
+- **FR-011a**: In edit mode, the details form MUST remain fully opaque while the rest of the page is darkened by an overlay.
 - **FR-012**: In edit mode, an Upload Photo action MUST appear and each existing image MUST provide a remove control.
+- **FR-012a**: In edit mode, field placement MUST match view mode layout (model header, image area on the left, main fields on the right, and section grids unchanged).
 - **FR-013**: Edit mode MUST provide Cancel and Save actions to discard or apply changes and exit edit mode.
 - **FR-014**: Clicking Add Car MUST open the same form in edit mode with all fields empty.
 - **FR-015**: Clicking Delete Car MUST open a confirmation step, and confirming MUST remove the vehicle from the system and update the list.
@@ -101,6 +103,8 @@ Any user adds a new vehicle using the same form, or deletes a vehicle after conf
 - **FR-018**: Warning messages MUST be shown only when at least one warning rule is triggered; otherwise no warnings area is shown.
 - **FR-019**: While edit mode is active, selecting a different vehicle in the table MUST be disabled.
 - **FR-020**: The vehicles page MUST meet basic WCAG 2.1 AA expectations with semantic structure, labeled inputs, and keyboard-accessible controls.
+- **FR-021**: All date values stored and exchanged via API MUST use ISO strings with time; the UI MUST display dates as `dd.MM.yyyy` and use date-picker inputs for editing.
+- **FR-022**: Enum fields MUST be single-select inputs; numeric fields MUST use number inputs in edit mode.
 
 ### Key Entities _(include if feature involves data)_
 

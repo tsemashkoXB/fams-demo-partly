@@ -21,12 +21,12 @@
 - seats
 - fullMass
 - vehiclePassport
-- vehiclePassportIssuedDate
+- vehiclePassportIssuedDate (ISO string with time)
 - insurance
-- insuranceExpiresAt
+- insuranceExpiresAt (ISO string with time)
 - nextServiceAtMileage
-- nextServiceTillDate
-- stateInspectionExpiresAt
+- nextServiceTillDate (ISO string with time)
+- stateInspectionExpiresAt (ISO string with time)
 - createdAt
 - updatedAt
 

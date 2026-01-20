@@ -179,20 +179,20 @@ components:
           type: string
         vehiclePassportIssuedDate:
           type: string
-          format: date
-        insurance:
-          type: string
+          format: date-time
+          insurance:
+            type: string
         insuranceExpiresAt:
           type: string
-          format: date
+          format: date-time
         nextServiceAtMileage:
           type: integer
         nextServiceTillDate:
           type: string
-          format: date
+          format: date-time
         stateInspectionExpiresAt:
           type: string
-          format: date
+          format: date-time
         images:
           type: array
           items:
@@ -236,20 +236,20 @@ components:
           type: string
         vehiclePassportIssuedDate:
           type: string
-          format: date
+          format: date-time
         insurance:
           type: string
         insuranceExpiresAt:
           type: string
-          format: date
+          format: date-time
         nextServiceAtMileage:
           type: integer
         nextServiceTillDate:
           type: string
-          format: date
+          format: date-time
         stateInspectionExpiresAt:
           type: string
-          format: date
+          format: date-time
     VehicleUpdate:
       type: object
       properties:
@@ -281,20 +281,20 @@ components:
           type: string
         vehiclePassportIssuedDate:
           type: string
-          format: date
+          format: date-time
         insurance:
           type: string
         insuranceExpiresAt:
           type: string
-          format: date
+          format: date-time
         nextServiceAtMileage:
           type: integer
         nextServiceTillDate:
           type: string
-          format: date
+          format: date-time
         stateInspectionExpiresAt:
           type: string
-          format: date
+          format: date-time
     VehicleImage:
       type: object
       properties:

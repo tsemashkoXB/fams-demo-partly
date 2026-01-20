@@ -7,7 +7,7 @@
 
 ## Summary
 
-Deliver a vehicles page with a searchable table, a right-side details panel with view/edit modes, image upload/delete, warning badges, and role-based editing permissions. Use the existing web + API stack, add TanStack React Query for data fetching, store images on disk with relative paths in the database, and seed demo data for five vehicles.
+Deliver a vehicles page with a searchable table, a right-side details panel with view/edit modes, image upload/delete, warning badges, and open editing access. Use the existing web + API stack, add TanStack React Query for data fetching, store images on disk with relative paths in the database, and seed demo data for five vehicles.
 
 ## Technical Context
 

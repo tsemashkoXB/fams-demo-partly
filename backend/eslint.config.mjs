@@ -11,7 +11,7 @@ export default [
     "prettier"
   ),
   {
-    ignores: ["dist/**"],
+    ignores: ["node_modules/**", "dist/**", "build/**"],
     languageOptions: {
       parserOptions: {
         project: "./tsconfig.json",
