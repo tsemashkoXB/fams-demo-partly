@@ -17,13 +17,13 @@
 
 **Purpose**: Project initialization and basic structure
 
-- [ ] T001 Initialize Next.js app scaffold in `frontend/` (create `frontend/package.json`, `frontend/src/app/layout.tsx`)
-- [ ] T002 Initialize NestJS app scaffold in `backend/` (create `backend/package.json`, `backend/src/main.ts`)
-- [ ] T003 [P] Configure TypeScript strict mode in `frontend/tsconfig.json`
-- [ ] T004 [P] Configure TypeScript strict mode in `backend/tsconfig.json`
-- [ ] T005 [P] Configure ESLint + Prettier in `frontend/.eslintrc.cjs` and `frontend/.prettierrc`
-- [ ] T006 [P] Configure ESLint + Prettier in `backend/.eslintrc.cjs` and `backend/.prettierrc`
-- [ ] T007 [P] Initialize shadcn/ui in `frontend/components.json` and `frontend/src/components/ui/`
+- [x] T001 Initialize Next.js app scaffold in `frontend/` (create `frontend/package.json`, `frontend/src/app/layout.tsx`)
+- [x] T002 Initialize NestJS app scaffold in `backend/` (create `backend/package.json`, `backend/src/main.ts`)
+- [x] T003 [P] Configure TypeScript strict mode in `frontend/tsconfig.json`
+- [x] T004 [P] Configure TypeScript strict mode in `backend/tsconfig.json`
+- [x] T005 [P] Configure ESLint + Prettier in `frontend/.eslintrc.cjs` and `frontend/.prettierrc`
+- [x] T006 [P] Configure ESLint + Prettier in `backend/.eslintrc.cjs` and `backend/.prettierrc`
+- [x] T007 [P] Initialize shadcn/ui in `frontend/components.json` and `frontend/src/components/ui/`
 
 ---
 
@@ -33,20 +33,20 @@
 
 **⚠️ CRITICAL**: No user story work can begin until this phase is complete
 
-- [ ] T008 Create Docker Postgres image in `docker/db/Dockerfile`
-- [ ] T009 Create local DB compose config in `docker-compose.yml`
-- [ ] T010 Add backend env validation for DB config in `backend/src/config/env.validation.ts`
-- [ ] T011 Implement backend health endpoint in `backend/src/health/health.controller.ts` and `backend/src/health/health.service.ts`
-- [ ] T012 Wire health module in `backend/src/app.module.ts`
-- [ ] T013 Define navigation data source in `frontend/src/lib/nav.ts`
-- [ ] T014 Define theme tokens and helpers in `frontend/src/lib/theme.ts`
-- [ ] T015 Add global palette and base styles in `frontend/src/styles/globals.css`
-- [ ] T016 Create base app shell layout in `frontend/src/components/layout/app-shell.tsx`
-- [ ] T017 Add shared header container in `frontend/src/components/layout/header.tsx`
-- [ ] T018 Add shared sidebar container in `frontend/src/components/layout/sidebar.tsx`
-- [ ] T019 Add app title and neutral icon in sidebar title area in `frontend/src/components/layout/sidebar.tsx`
-- [ ] T020 Set app metadata title in `frontend/src/app/layout.tsx`
-- [ ] T021 Apply app shell in `frontend/src/app/layout.tsx`
+- [x] T008 Create Docker Postgres image in `docker/db/Dockerfile`
+- [x] T009 Create local DB compose config in `docker-compose.yml`
+- [x] T010 Add backend env validation for DB config in `backend/src/config/env.validation.ts`
+- [x] T011 Implement backend health endpoint in `backend/src/health/health.controller.ts` and `backend/src/health/health.service.ts`
+- [x] T012 Wire health module in `backend/src/app.module.ts`
+- [x] T013 Define navigation data source in `frontend/src/lib/nav.ts`
+- [x] T014 Define theme tokens and helpers in `frontend/src/lib/theme.ts`
+- [x] T015 Add global palette and base styles in `frontend/src/styles/globals.css`
+- [x] T016 Create base app shell layout in `frontend/src/components/layout/app-shell.tsx`
+- [x] T017 Add shared header container in `frontend/src/components/layout/header.tsx`
+- [x] T018 Add shared sidebar container in `frontend/src/components/layout/sidebar.tsx`
+- [x] T019 Add app title and neutral icon in sidebar title area in `frontend/src/components/layout/sidebar.tsx`
+- [x] T020 Set app metadata title in `frontend/src/app/layout.tsx`
+- [x] T021 Apply app shell in `frontend/src/app/layout.tsx`
 
 **Checkpoint**: Foundation ready - user story implementation can now begin in parallel
 
@@ -60,11 +60,11 @@
 
 ### Implementation for User Story 1
 
-- [ ] T022 [P] [US1] Create route files for five pages in `frontend/src/app/vehicles/page.tsx`, `frontend/src/app/users/page.tsx`, `frontend/src/app/scheduler/page.tsx`, `frontend/src/app/radar/page.tsx`, `frontend/src/app/statistics/page.tsx`
-- [ ] T023 [US1] Render empty page content shells in each page file listed in `frontend/src/app/*/page.tsx`
-- [ ] T024 [US1] Implement sidebar navigation links with pathname-based active state in `frontend/src/components/layout/sidebar.tsx`
-- [ ] T025 [US1] Add distinct nav item icons in `frontend/src/lib/nav.ts` and render them in `frontend/src/components/layout/sidebar.tsx`
-- [ ] T026 [US1] Set default landing page to Vehicles in `frontend/src/app/page.tsx`
+- [x] T022 [P] [US1] Create route files for five pages in `frontend/src/app/vehicles/page.tsx`, `frontend/src/app/users/page.tsx`, `frontend/src/app/scheduler/page.tsx`, `frontend/src/app/radar/page.tsx`, `frontend/src/app/statistics/page.tsx`
+- [x] T023 [US1] Render empty page content shells in each page file listed in `frontend/src/app/*/page.tsx`
+- [x] T024 [US1] Implement sidebar navigation links with pathname-based active state in `frontend/src/components/layout/sidebar.tsx`
+- [x] T025 [US1] Add distinct nav item icons in `frontend/src/lib/nav.ts` and render them in `frontend/src/components/layout/sidebar.tsx`
+- [x] T026 [US1] Set default landing page to Vehicles in `frontend/src/app/page.tsx`
 
 **Checkpoint**: User Story 1 is fully functional and testable independently
 
@@ -78,9 +78,9 @@
 
 ### Implementation for User Story 2
 
-- [ ] T027 [US2] Add collapsed state handling in `frontend/src/components/layout/app-shell.tsx`
-- [ ] T028 [US2] Implement title click toggle in `frontend/src/components/layout/sidebar.tsx`
-- [ ] T029 [US2] Add collapsed styles, icon-only mode, and safe rapid toggling in `frontend/src/components/layout/sidebar.tsx`
+- [x] T027 [US2] Add collapsed state handling in `frontend/src/components/layout/app-shell.tsx`
+- [x] T028 [US2] Implement title click toggle in `frontend/src/components/layout/sidebar.tsx`
+- [x] T029 [US2] Add collapsed styles, icon-only mode, and safe rapid toggling in `frontend/src/components/layout/sidebar.tsx`
 
 **Checkpoint**: User Stories 1 and 2 work together without regressions
 
@@ -94,9 +94,9 @@
 
 ### Implementation for User Story 3
 
-- [ ] T030 [US3] Add mock user avatar display with random photo and circular crop in `frontend/src/components/layout/header.tsx`
-- [ ] T031 [US3] Add alerts icon display in `frontend/src/components/layout/header.tsx`
-- [ ] T032 [US3] Style header elements with shadcn/ui components in `frontend/src/components/layout/header.tsx`
+- [x] T030 [US3] Add mock user avatar display with random photo and circular crop in `frontend/src/components/layout/header.tsx`
+- [x] T031 [US3] Add alerts icon display in `frontend/src/components/layout/header.tsx`
+- [x] T032 [US3] Style header elements with shadcn/ui components in `frontend/src/components/layout/header.tsx`
 
 **Checkpoint**: All user stories are independently functional
 
@@ -106,10 +106,10 @@
 
 **Purpose**: Improvements that affect multiple user stories
 
-- [ ] T033 [P] Apply consistent shadows and accent buttons across layout in `frontend/src/styles/globals.css`
-- [ ] T034 [P] Align sidebar colors with palette in `frontend/src/components/layout/sidebar.tsx`
-- [ ] T035 Verify no auth routes or prompts are included in `frontend/src/app/` and `frontend/src/components/`
-- [ ] T036 Update quickstart instructions if scaffolded outputs differ in `specs/001-fams-demo-app/quickstart.md`
+- [x] T033 [P] Apply consistent shadows and accent buttons across layout in `frontend/src/styles/globals.css`
+- [x] T034 [P] Align sidebar colors with palette in `frontend/src/components/layout/sidebar.tsx`
+- [x] T035 Verify no auth routes or prompts are included in `frontend/src/app/` and `frontend/src/components/`
+- [x] T036 Update quickstart instructions if scaffolded outputs differ in `specs/001-fams-demo-app/quickstart.md`
 
 ---
 

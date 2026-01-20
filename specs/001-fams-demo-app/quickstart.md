@@ -9,7 +9,8 @@
 ```bash
 npx create-next-app@latest frontend --ts --tailwind --eslint --app --src-dir --import-alias "@/*"
 cd frontend
-npx shadcn-ui@latest init
+npx shadcn@latest init -y
+npx shadcn@latest add button avatar tooltip separator -y
 ```
 
 ## Backend (NestJS)

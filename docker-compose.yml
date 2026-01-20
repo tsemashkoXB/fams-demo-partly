@@ -1,0 +1,16 @@
+services:
+  db:
+    build:
+      context: .
+      dockerfile: docker/db/Dockerfile
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: fams
+      POSTGRES_PASSWORD: fams
+      POSTGRES_DB: fams_demo
+    volumes:
+      - fams_db:/var/lib/postgresql/data
+
+volumes:
+  fams_db:
