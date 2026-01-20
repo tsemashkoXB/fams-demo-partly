@@ -1,0 +1,308 @@
+openapi: 3.0.3
+info:
+  title: Vehicles API
+  version: 1.0.0
+servers:
+  - url: /api
+
+paths:
+  /vehicles:
+    get:
+      summary: List vehicles
+      description: Returns vehicles filtered by optional search query.
+      parameters:
+        - in: query
+          name: q
+          schema:
+            type: string
+          description: Search across plate number, model name, type, year, VIN.
+      responses:
+        "200":
+          description: Vehicle list
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Vehicle"
+    post:
+      summary: Create vehicle
+      description: Requires manage permission.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/VehicleCreate"
+      responses:
+        "201":
+          description: Vehicle created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Vehicle"
+
+  /vehicles/{vehicleId}:
+    get:
+      summary: Get vehicle details
+      parameters:
+        - in: path
+          name: vehicleId
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Vehicle details
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Vehicle"
+    put:
+      summary: Update vehicle
+      description: Requires manage permission.
+      parameters:
+        - in: path
+          name: vehicleId
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/VehicleUpdate"
+      responses:
+        "200":
+          description: Vehicle updated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Vehicle"
+    delete:
+      summary: Delete vehicle
+      description: Requires manage permission.
+      parameters:
+        - in: path
+          name: vehicleId
+          required: true
+          schema:
+            type: string
+      responses:
+        "204":
+          description: Vehicle deleted
+
+  /vehicles/{vehicleId}/images:
+    post:
+      summary: Upload vehicle image
+      description: Requires manage permission. Stores file locally and returns image metadata.
+      parameters:
+        - in: path
+          name: vehicleId
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              required:
+                - file
+              properties:
+                file:
+                  type: string
+                  format: binary
+      responses:
+        "201":
+          description: Image uploaded
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/VehicleImage"
+
+  /vehicles/{vehicleId}/images/{imageId}:
+    delete:
+      summary: Delete vehicle image
+      description: Requires manage permission. Removes file and metadata.
+      parameters:
+        - in: path
+          name: vehicleId
+          required: true
+          schema:
+            type: string
+        - in: path
+          name: imageId
+          required: true
+          schema:
+            type: string
+      responses:
+        "204":
+          description: Image deleted
+
+components:
+  schemas:
+    Vehicle:
+      type: object
+      properties:
+        id:
+          type: string
+        plateNumber:
+          type: string
+        modelName:
+          type: string
+        type:
+          type: string
+          enum: [PC, Pass Van, Van, CV, Bus]
+        yearOfProduction:
+          type: integer
+        vin:
+          type: string
+        currentMileage:
+          type: integer
+        color:
+          type: string
+        engine:
+          type: string
+        fuelType:
+          type: string
+          enum: [Petrol, Gas, Diesel]
+        payload:
+          type: number
+        seats:
+          type: integer
+        fullMass:
+          type: number
+        vehiclePassport:
+          type: string
+        vehiclePassportIssuedDate:
+          type: string
+          format: date
+        insurance:
+          type: string
+        insuranceExpiresAt:
+          type: string
+          format: date
+        nextServiceAtMileage:
+          type: integer
+        nextServiceTillDate:
+          type: string
+          format: date
+        stateInspectionExpiresAt:
+          type: string
+          format: date
+        images:
+          type: array
+          items:
+            $ref: "#/components/schemas/VehicleImage"
+    VehicleCreate:
+      type: object
+      required:
+        - plateNumber
+        - modelName
+        - type
+        - yearOfProduction
+        - vin
+      properties:
+        plateNumber:
+          type: string
+        modelName:
+          type: string
+        type:
+          type: string
+          enum: [PC, Pass Van, Van, CV, Bus]
+        yearOfProduction:
+          type: integer
+        vin:
+          type: string
+        currentMileage:
+          type: integer
+        color:
+          type: string
+        engine:
+          type: string
+        fuelType:
+          type: string
+          enum: [Petrol, Gas, Diesel]
+        payload:
+          type: number
+        seats:
+          type: integer
+        fullMass:
+          type: number
+        vehiclePassport:
+          type: string
+        vehiclePassportIssuedDate:
+          type: string
+          format: date
+        insurance:
+          type: string
+        insuranceExpiresAt:
+          type: string
+          format: date
+        nextServiceAtMileage:
+          type: integer
+        nextServiceTillDate:
+          type: string
+          format: date
+        stateInspectionExpiresAt:
+          type: string
+          format: date
+    VehicleUpdate:
+      type: object
+      properties:
+        modelName:
+          type: string
+        type:
+          type: string
+          enum: [PC, Pass Van, Van, CV, Bus]
+        yearOfProduction:
+          type: integer
+        vin:
+          type: string
+        currentMileage:
+          type: integer
+        color:
+          type: string
+        engine:
+          type: string
+        fuelType:
+          type: string
+          enum: [Petrol, Gas, Diesel]
+        payload:
+          type: number
+        seats:
+          type: integer
+        fullMass:
+          type: number
+        vehiclePassport:
+          type: string
+        vehiclePassportIssuedDate:
+          type: string
+          format: date
+        insurance:
+          type: string
+        insuranceExpiresAt:
+          type: string
+          format: date
+        nextServiceAtMileage:
+          type: integer
+        nextServiceTillDate:
+          type: string
+          format: date
+        stateInspectionExpiresAt:
+          type: string
+          format: date
+    VehicleImage:
+      type: object
+      properties:
+        id:
+          type: string
+        vehicleId:
+          type: string
+        relativePath:
+          type: string
+        displayOrder:
+          type: integer
