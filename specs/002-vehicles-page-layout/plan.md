@@ -18,7 +18,7 @@ Deliver a vehicles page with a searchable table, a right-side details panel with
 **Target Platform**: Web app (browser) + Node.js server  
 **Project Type**: Web application (frontend/ + backend/)  
 **Performance Goals**: Search filters return results in under 1 second for up to 1,000 vehicles; detail panel updates in under 500 ms  
-**Constraints**: Inline form validation for all editable fields; view-only for non-manage users; local image storage with relative paths; no automated tests added  
+**Constraints**: Inline form validation for all editable fields; local image storage with relative paths; no automated tests added  
 **Scale/Scope**: Single fleet list up to ~1,000 vehicles; initial seed of 5 vehicles
 
 ## Constitution Check
@@ -54,6 +54,7 @@ backend/
 │   ├── controllers/
 │   ├── services/
 │   └── entities/
+│   └── migrations/
 └── tests/
 
 frontend/

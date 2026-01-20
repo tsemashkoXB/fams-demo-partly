@@ -9,7 +9,7 @@
 
 ### Session 2026-01-20
 
-- Q: Which user roles can add/edit/delete vehicles? → A: All users can view; only users with manage permission can add/edit/delete.
+- Q: Which user roles can add/edit/delete vehicles? → A: Any user can add, edit, or delete vehicles; no authorization is enforced.
 - Q: What should happen when the list is non-empty and no vehicle is selected? → A: Auto-select the first row whenever the list is non-empty.
 - Q: Are warning thresholds inclusive or exclusive? → A: Warnings trigger only when the value is strictly less than the threshold.
 - Q: When should warnings be displayed? → A: Warnings appear only when at least one rule triggers.
@@ -19,13 +19,13 @@
 
 ### User Story 1 - Browse and select vehicles (Priority: P1)
 
-A user views the vehicles list, searches by any column value, and selects a row to see details on the right panel.
+A user views the vehicles list, searches by plate number, model name, type, or year, and selects a row to see details on the right panel.
 
 **Why this priority**: The list and selection are the entry point to all other actions.
 
 **Acceptance Scenarios**:
 
-1. **Given** a list of vehicles is shown, **When** the user types in the search input, **Then** the table filters by any matching column value.
+1. **Given** a list of vehicles is shown, **When** the user types in the search input, **Then** the table filters by matching plate number, model name, type, or year.
 2. **Given** multiple vehicles are listed, **When** the user selects a row, **Then** the details panel updates to show that vehicle's data.
 
 ---
@@ -59,7 +59,7 @@ A user enters edit mode to change any field, manage photos, then saves or cancel
 
 ### User Story 4 - Add or delete a vehicle (Priority: P4)
 
-A user with manage permission adds a new vehicle using the same form, or deletes a vehicle after confirmation.
+Any user adds a new vehicle using the same form, or deletes a vehicle after confirmation.
 
 **Why this priority**: Create and delete flows are essential but less frequent than viewing and editing.
 
@@ -82,7 +82,7 @@ A user with manage permission adds a new vehicle using the same form, or deletes
 ### Functional Requirements
 
 - **FR-001**: The vehicles table MUST display columns for plate number, model name, type, and year.
-- **FR-002**: The search input MUST filter the table by any column value.
+- **FR-002**: The search input MUST filter the table by plate number, model name, type, or year.
 - **FR-003**: Selecting a row MUST update the details panel to the selected vehicle.
 - **FR-004**: The details panel MUST have a fixed width near 550px and appear on the right side of the layout.
 - **FR-005**: The main section MUST display model name, images, plate number, year of production, and VIN, with an Edit button aligned to the right of the model name.
@@ -96,10 +96,11 @@ A user with manage permission adds a new vehicle using the same form, or deletes
 - **FR-013**: Edit mode MUST provide Cancel and Save actions to discard or apply changes and exit edit mode.
 - **FR-014**: Clicking Add Car MUST open the same form in edit mode with all fields empty.
 - **FR-015**: Clicking Delete Car MUST open a confirmation step, and confirming MUST remove the vehicle from the system and update the list.
-- **FR-016**: Only users with manage permission MUST be able to add, edit, or delete vehicles; all users MUST be able to view and search.
+- **FR-016**: Any user MUST be able to add, edit, or delete vehicles; no authorization is enforced.
 - **FR-017**: When the list is non-empty and no selection exists, the system MUST auto-select the first vehicle.
 - **FR-018**: Warning messages MUST be shown only when at least one warning rule is triggered; otherwise no warnings area is shown.
 - **FR-019**: While edit mode is active, selecting a different vehicle in the table MUST be disabled.
+- **FR-020**: The vehicles page MUST meet basic WCAG 2.1 AA expectations with semantic structure, labeled inputs, and keyboard-accessible controls.
 
 ### Key Entities _(include if feature involves data)_
 

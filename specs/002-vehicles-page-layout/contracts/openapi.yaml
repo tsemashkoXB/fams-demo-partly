@@ -15,7 +15,7 @@ paths:
           name: q
           schema:
             type: string
-          description: Search across plate number, model name, type, year, VIN.
+          description: Search across plate number, model name, type, and year.
       responses:
         "200":
           description: Vehicle list
@@ -27,7 +27,7 @@ paths:
                   $ref: "#/components/schemas/Vehicle"
     post:
       summary: Create vehicle
-      description: Requires manage permission.
+      description: Creates a new vehicle record.
       requestBody:
         required: true
         content:
@@ -60,7 +60,7 @@ paths:
                 $ref: "#/components/schemas/Vehicle"
     put:
       summary: Update vehicle
-      description: Requires manage permission.
+      description: Updates an existing vehicle record.
       parameters:
         - in: path
           name: vehicleId
@@ -82,7 +82,7 @@ paths:
                 $ref: "#/components/schemas/Vehicle"
     delete:
       summary: Delete vehicle
-      description: Requires manage permission.
+      description: Deletes a vehicle record.
       parameters:
         - in: path
           name: vehicleId
@@ -96,7 +96,7 @@ paths:
   /vehicles/{vehicleId}/images:
     post:
       summary: Upload vehicle image
-      description: Requires manage permission. Stores file locally and returns image metadata.
+      description: Stores file locally and returns image metadata.
       parameters:
         - in: path
           name: vehicleId
@@ -126,7 +126,7 @@ paths:
   /vehicles/{vehicleId}/images/{imageId}:
     delete:
       summary: Delete vehicle image
-      description: Requires manage permission. Removes file and metadata.
+      description: Removes file and metadata.
       parameters:
         - in: path
           name: vehicleId

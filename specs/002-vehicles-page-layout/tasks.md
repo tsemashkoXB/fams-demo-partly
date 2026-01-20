@@ -34,11 +34,11 @@ description: "Task list for Vehicles Page Layout"
 
 - [ ] T005 Configure backend database connection in `backend/src/config/database.ts`
 - [ ] T006 Add database module wiring in `backend/src/modules/database/database.module.ts`
-- [ ] T007 Create migration for vehicle tables in `backend/src/migrations/001_create_vehicles_tables.ts`
-- [ ] T008 Create migration for seed data (5 vehicles) in `backend/src/migrations/002_seed_vehicles.ts`
-- [ ] T009 Add migration runner scripts in `backend/package.json`
-- [ ] T010 Create image storage path config in `backend/src/config/uploads.ts`
-- [ ] T011 Add manage-permission guard stub in `backend/src/auth/manage-permission.guard.ts`
+- [ ] T007 Create migrations folder in `backend/src/migrations/`
+- [ ] T008 Create migration for vehicle tables in `backend/src/migrations/001_create_vehicles_tables.ts`
+- [ ] T009 Create migration for seed data (5 vehicles) in `backend/src/migrations/002_seed_vehicles.ts`
+- [ ] T010 Add migration runner scripts in `backend/package.json`
+- [ ] T011 Create image storage path config in `backend/src/config/uploads.ts`
 - [ ] T012 Add vehicles module entry in `backend/src/modules/vehicles/vehicles.module.ts`
 - [ ] T013 [P] Create Vehicle entity in `backend/src/modules/vehicles/entities/vehicle.entity.ts`
 - [ ] T014 [P] Create VehicleImage entity in `backend/src/modules/vehicles/entities/vehicle-image.entity.ts`
@@ -57,7 +57,7 @@ description: "Task list for Vehicles Page Layout"
 
 - [ ] T015 [P] [US1] Implement list/search endpoint in `backend/src/modules/vehicles/vehicles.controller.ts`
 - [ ] T016 [US1] Add list/search service logic in `backend/src/modules/vehicles/vehicles.service.ts`
-- [ ] T017 [P] [US1] Add list query data access in `backend/src/modules/vehicles/vehicles.repository.ts`
+- [ ] T017 [P] [US1] Add list query data access (plate number, model name, type, year) in `backend/src/modules/vehicles/vehicles.repository.ts`
 - [ ] T018 [P] [US1] Create vehicles query hooks in `frontend/src/services/vehicles/queries.ts`
 - [ ] T019 [US1] Build vehicles page shell in `frontend/src/app/vehicles/page.tsx`
 - [ ] T020 [P] [US1] Implement table UI in `frontend/src/components/vehicles/vehicles-table.tsx`
@@ -106,6 +106,7 @@ description: "Task list for Vehicles Page Layout"
 - [ ] T037 [P] [US3] Add validation schema in `frontend/src/components/vehicles/vehicle-form.validation.ts`
 - [ ] T038 [US3] Add edit-mode overlay and disable selection in `frontend/src/app/vehicles/page.tsx`
 - [ ] T039 [P] [US3] Add image upload/remove controls in `frontend/src/components/vehicles/vehicle-images-editor.tsx`
+- [ ] T040 [US3] Disable Add Car/Edit actions while edit mode is active in `frontend/src/app/vehicles/page.tsx`
 
 **Checkpoint**: User Story 3 fully functional and testable independently
 
@@ -119,12 +120,12 @@ description: "Task list for Vehicles Page Layout"
 
 ### Implementation for User Story 4
 
-- [ ] T040 [P] [US4] Implement create endpoint in `backend/src/modules/vehicles/vehicles.controller.ts`
-- [ ] T041 [P] [US4] Implement delete endpoint in `backend/src/modules/vehicles/vehicles.controller.ts`
-- [ ] T042 [US4] Add create/delete service logic in `backend/src/modules/vehicles/vehicles.service.ts`
-- [ ] T043 [US4] Add add-vehicle flow in `frontend/src/components/vehicles/vehicle-add-button.tsx`
-- [ ] T044 [US4] Add delete confirmation UI in `frontend/src/components/vehicles/vehicle-delete-dialog.tsx`
-- [ ] T045 [US4] Wire add/delete mutations and list refresh in `frontend/src/app/vehicles/page.tsx`
+- [ ] T041 [P] [US4] Implement create endpoint in `backend/src/modules/vehicles/vehicles.controller.ts`
+- [ ] T042 [P] [US4] Implement delete endpoint in `backend/src/modules/vehicles/vehicles.controller.ts`
+- [ ] T043 [US4] Add create/delete service logic in `backend/src/modules/vehicles/vehicles.service.ts`
+- [ ] T044 [US4] Add add-vehicle flow in `frontend/src/components/vehicles/vehicle-add-button.tsx`
+- [ ] T045 [US4] Add delete confirmation UI in `frontend/src/components/vehicles/vehicle-delete-dialog.tsx`
+- [ ] T046 [US4] Wire add/delete mutations and list refresh in `frontend/src/app/vehicles/page.tsx`
 
 **Checkpoint**: User Story 4 fully functional and testable independently
 
@@ -134,9 +135,10 @@ description: "Task list for Vehicles Page Layout"
 
 **Purpose**: Improvements that affect multiple user stories
 
-- [ ] T046 [P] Ensure role-based UI disabling in `frontend/src/components/vehicles/vehicles-actions.tsx`
 - [ ] T047 [P] Add empty state display in `frontend/src/components/vehicles/vehicles-empty-state.tsx`
 - [ ] T048 [P] Run quickstart verification updates in `specs/002-vehicles-page-layout/quickstart.md`
+- [ ] T049 [P] Add WCAG 2.1 AA basics (labels, focus states, keyboard access) in `frontend/src/components/vehicles/vehicles-table.tsx`, `frontend/src/components/vehicles/vehicles-search.tsx`, `frontend/src/components/vehicles/vehicle-details-panel.tsx`, `frontend/src/components/vehicles/vehicle-form.tsx`
+- [ ] T050 Add manual performance check steps in `specs/002-vehicles-page-layout/quickstart.md`
 
 ---
 
@@ -189,4 +191,3 @@ Task: "Implement table UI in frontend/src/components/vehicles/vehicles-table.tsx
 2. Add User Story 2 → Validate
 3. Add User Story 3 → Validate
 4. Add User Story 4 → Validate
-
