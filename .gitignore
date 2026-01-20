@@ -1,6 +1,7 @@
 .DS_Store
 .idea/
 .vscode/
+.codex/
 *.log
 *.tmp
 *.swp
@@ -9,3 +10,9 @@ node_modules/
 dist/
 build/
 .env*
+
+# next.js
+.next/
+
+# typescript
+next-env.d.ts
