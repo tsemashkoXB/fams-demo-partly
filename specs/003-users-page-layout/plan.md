@@ -7,7 +7,7 @@
 
 ## Summary
 
-Deliver a users page with a searchable table, selectable rows, and a fixed-width right-side details panel using the existing web + API stack and design style. Provide read-only user details, derived warnings, image upload using the existing backend pattern, and seed the database with 5 users via a migration for demo data.
+Deliver a users page with a searchable table, selectable rows, and a fixed-width right-side details panel using the existing web + API stack and design style. Provide view and edit modes for user details (including image upload/remove), derived warnings, and seed the database with 5 users via a migration for demo data.
 
 ## Technical Context
 
@@ -18,7 +18,7 @@ Deliver a users page with a searchable table, selectable rows, and a fixed-width
 **Target Platform**: Web app (browser) + Node.js server  
 **Project Type**: Web application (frontend/ + backend/)  
 **Performance Goals**: Search filters return results in under 1 second for up to 100 users; detail panel updates in under 500 ms  
-**Constraints**: Keep current design principles and style; read-only UI (no edit/create behavior in scope); no automated tests added  
+**Constraints**: Keep current design principles and style; inline validation for editable fields; no automated tests added  
 **Scale/Scope**: Single users list up to ~100 users; initial seed of 5 users
 
 ## Constitution Check

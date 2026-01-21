@@ -38,6 +38,7 @@
 **Validation Rules**:
 - relativePath is required and stored as a relative path from the image root.
 - displayOrder is a non-negative integer.
+- Primary image is the record with the highest displayOrder.
 
 **Validation Rules**:
 - name and surname are required and non-empty.

@@ -27,6 +27,7 @@ As a staff member, I can view a list of users and select any row to see that use
 
 1. **Given** the users page is open with at least one user, **When** I select a row, **Then** the selected row is visually highlighted and the right panel updates to show that user's details.
 2. **Given** the users page is open, **When** I open the page without making a selection, **Then** an empty-state details panel is shown so the layout remains stable.
+3. **Given** a user is selected, **When** I click Edit, **Then** the details panel switches to editable fields and I can save changes.
 
 ---
 
@@ -78,6 +79,10 @@ As a staff member, I can view contact info, document details, and warnings for t
 - **FR-007**: The name and surname MUST appear as a header with an Edit button aligned to its right.
 - **FR-008**: The main section MUST place the image in a container taking about half the panel width, with the remaining fields in the other half.
 - **FR-008a**: The image area MUST support uploading and removing a user image using the existing image upload logic from prior features.
+- **FR-008a1**: The primary image displayed in the details panel MUST be the image with the highest displayOrder value.
+- **FR-008b**: Clicking Edit MUST switch the details panel into an editable form mode for all user fields.
+- **FR-008c**: Users MUST be able to save edits to any field and see updates reflected in the list and details panel.
+- **FR-008d**: All editable fields MUST validate inline with clear, field-level error messages.
 - **FR-009**: Status, gender, position, date of birth, and contract termination MUST appear as non-editable input-style fields.
 - **FR-010**: A Contacts section MUST present email and phone as non-editable input-style fields in two columns.
 - **FR-010a**: If a field value is missing, its input-style field MUST remain visible but empty.
@@ -85,6 +90,7 @@ As a staff member, I can view contact info, document details, and warnings for t
 - **FR-012**: Driving categories MUST appear as tags in view mode.
 - **FR-013**: Warnings MUST be shown beneath the sections when applicable, including: Driving license expired, Driving license expires soon, Contract expired.
 - **FR-013a**: If multiple warnings apply, all of them MUST be displayed.
+- **FR-013b**: "Expired" applies when the relevant date is before today; "expires soon" applies when the relevant date is within the next 30 days.
 - **FR-014**: The UI MUST support the following enumerations:
   - Positions: Sale, Merchandiser, Driver, House Master, Logistic, Courier.
   - Status: Active, Banned.
@@ -109,5 +115,5 @@ As a staff member, I can view contact info, document details, and warnings for t
 
 ## Assumptions
 
-- The Add User and Edit buttons are present in the layout but do not require functional behavior beyond visibility for this feature.
+- The Add User button is present in the layout but does not require functional behavior beyond visibility for this feature.
 - When the list is non-empty, the first user is selected by default; otherwise, an empty-state panel is shown.
