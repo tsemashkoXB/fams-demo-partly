@@ -77,6 +77,7 @@ As a staff member, I can view contact info, document details, and warnings for t
 - **FR-006**: The details panel MUST include a main section (no section title) showing name, surname, image, status, gender, position, date of birth, and contract termination.
 - **FR-007**: The name and surname MUST appear as a header with an Edit button aligned to its right.
 - **FR-008**: The main section MUST place the image in a container taking about half the panel width, with the remaining fields in the other half.
+- **FR-008a**: The image area MUST support uploading and removing a user image using the existing image upload logic from prior features.
 - **FR-009**: Status, gender, position, date of birth, and contract termination MUST appear as non-editable input-style fields.
 - **FR-010**: A Contacts section MUST present email and phone as non-editable input-style fields in two columns.
 - **FR-010a**: If a field value is missing, its input-style field MUST remain visible but empty.
@@ -94,6 +95,7 @@ As a staff member, I can view contact info, document details, and warnings for t
 ### Key Entities _(include if feature involves data)_
 
 - **User**: Represents a person in the system with identity, role/position, status, dates, contacts, and document metadata.
+- **UserImage**: Image metadata for a user stored using the existing image upload pattern.
 - **Warning**: A displayable alert derived from user document dates or contract status.
 
 ## Success Criteria _(mandatory)_
