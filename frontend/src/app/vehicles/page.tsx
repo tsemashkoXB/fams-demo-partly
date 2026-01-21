@@ -79,7 +79,7 @@ export default function VehiclesPage() {
     value.trim() === "" ? null : value;
 
   return (
-    <div className="relative flex h-full flex-col gap-6">
+    <div className="relative flex h-full min-h-0 flex-col gap-6 overflow-hidden">
       {isEditing && (
         <div className="fixed inset-0 z-40 bg-black/50 pointer-events-none" />
       )}
@@ -100,127 +100,141 @@ export default function VehiclesPage() {
         />
       </div>
 
-      <div className="flex flex-1 flex-col gap-6 xl:flex-row">
-        <section className="flex min-w-0 flex-1 flex-col gap-4">
+      <div className="flex min-h-0 flex-1 flex-col gap-6 xl:flex-row">
+        <section className="flex min-h-0 min-w-0 flex-1 flex-col gap-4 overflow-hidden">
           <VehiclesSearch value={search} onChange={setSearch} />
-          {isLoading ? (
-            <div className="rounded-xl border border-dashed border-border p-6 text-sm text-muted-foreground">
-              Loading vehicles...
-            </div>
-          ) : isError ? (
-            <div className="rounded-xl border border-destructive/40 bg-destructive/10 p-6 text-sm text-destructive">
-              Unable to load vehicles. Try again.
-            </div>
-          ) : vehicles.length === 0 ? (
-            <VehiclesEmptyState />
-          ) : (
-            <VehiclesTable
-              vehicles={vehicles}
-              selectedId={selectedId}
-              onSelect={setSelectedId}
-              disabled={isEditing}
-            />
-          )}
+          <div className="flex-1 min-h-0 overflow-y-auto">
+            {isLoading ? (
+              <div className="rounded-xl border border-dashed border-border p-6 text-sm text-muted-foreground">
+                Loading vehicles...
+              </div>
+            ) : isError ? (
+              <div className="rounded-xl border border-destructive/40 bg-destructive/10 p-6 text-sm text-destructive">
+                Unable to load vehicles. Try again.
+              </div>
+            ) : vehicles.length === 0 ? (
+              <VehiclesEmptyState />
+            ) : (
+              <VehiclesTable
+                vehicles={vehicles}
+                selectedId={selectedId}
+                onSelect={setSelectedId}
+                disabled={isEditing}
+              />
+            )}
+          </div>
         </section>
 
         <aside
-          className={`relative z-50 w-full max-w-full rounded-2xl border border-border p-6 xl:max-w-[550px] ${
+          className={`relative z-50 flex w-full max-w-full min-h-0 flex-col overflow-hidden rounded-2xl border border-border xl:max-w-[550px] xl:self-stretch ${
             isEditing ? "bg-card shadow-lg" : "bg-muted/20"
           }`}
         >
           {isDetailsLoading && selectedId ? (
-            <div className="rounded-xl border border-dashed border-border p-6 text-sm text-muted-foreground">
+            <div className="p-6 text-sm text-muted-foreground">
               Loading details...
             </div>
           ) : selectedVehicle || isAdding ? (
             isEditing ? (
-              <VehicleForm
-                initialValues={formValues}
-                images={selectedVehicle?.images}
-                imagesDisabled={isAdding}
-                onCancel={() => {
-                  setIsEditing(false);
-                  setIsAdding(false);
-                }}
-                onSave={(values) => {
-                  const payload = {
-                    plateNumber: values.plateNumber.trim(),
-                    modelName: values.modelName.trim(),
-                    type: values.type,
-                    yearOfProduction: Number(values.yearOfProduction),
-                    vin: values.vin.trim(),
-                    currentMileage: toNullableNumber(values.currentMileage) ?? 0,
-                    color: toNullableString(values.color),
-                    engine: toNullableString(values.engine),
-                    fuelType: toNullableString(values.fuelType),
-                    payload: toNullableNumber(values.payload),
-                    seats: toNullableNumber(values.seats),
-                    fullMass: toNullableNumber(values.fullMass),
-                    vehiclePassport: toNullableString(values.vehiclePassport),
-                    vehiclePassportIssuedDate: toNullableString(
-                      values.vehiclePassportIssuedDate
-                    ),
-                    insurance: toNullableString(values.insurance),
-                    insuranceExpiresAt: toNullableString(values.insuranceExpiresAt),
-                    nextServiceAtMileage: toNullableNumber(
-                      values.nextServiceAtMileage
-                    ),
-                    nextServiceTillDate: toNullableString(values.nextServiceTillDate),
-                    stateInspectionExpiresAt: toNullableString(
-                      values.stateInspectionExpiresAt
-                    ),
-                  };
+              <>
+                <div className="flex-1 min-h-0 overflow-y-auto p-6">
+                  <VehicleForm
+                    initialValues={formValues}
+                    images={selectedVehicle?.images}
+                    imagesDisabled={isAdding}
+                    onCancel={() => {
+                      setIsEditing(false);
+                      setIsAdding(false);
+                    }}
+                    onSave={(values) => {
+                      const payload = {
+                        plateNumber: values.plateNumber.trim(),
+                        modelName: values.modelName.trim(),
+                        type: values.type,
+                        yearOfProduction: Number(values.yearOfProduction),
+                        vin: values.vin.trim(),
+                        currentMileage: toNullableNumber(values.currentMileage) ?? 0,
+                        color: toNullableString(values.color),
+                        engine: toNullableString(values.engine),
+                        fuelType: toNullableString(values.fuelType),
+                        payload: toNullableNumber(values.payload),
+                        seats: toNullableNumber(values.seats),
+                        fullMass: toNullableNumber(values.fullMass),
+                        vehiclePassport: toNullableString(values.vehiclePassport),
+                        vehiclePassportIssuedDate: toNullableString(
+                          values.vehiclePassportIssuedDate
+                        ),
+                        insurance: toNullableString(values.insurance),
+                        insuranceExpiresAt: toNullableString(
+                          values.insuranceExpiresAt
+                        ),
+                        nextServiceAtMileage: toNullableNumber(
+                          values.nextServiceAtMileage
+                        ),
+                        nextServiceTillDate: toNullableString(
+                          values.nextServiceTillDate
+                        ),
+                        stateInspectionExpiresAt: toNullableString(
+                          values.stateInspectionExpiresAt
+                        ),
+                      };
 
-                  if (isAdding) {
-                    createMutation.mutate(payload, {
-                      onSuccess: (created) => {
-                        setSelectedId(created.id);
-                        setIsAdding(false);
-                        setIsEditing(false);
-                      },
-                    });
-                    return;
-                  }
+                      if (isAdding) {
+                        createMutation.mutate(payload, {
+                          onSuccess: (created) => {
+                            setSelectedId(created.id);
+                            setIsAdding(false);
+                            setIsEditing(false);
+                          },
+                        });
+                        return;
+                      }
 
-                  if (selectedId) {
-                    updateMutation.mutate(payload, {
-                      onSuccess: () => setIsEditing(false),
-                    });
-                  }
-                }}
-                onUploadImage={(file) => uploadMutation.mutate(file)}
-                onRemoveImage={(imageId) => deleteImageMutation.mutate(imageId)}
-                isSaving={updateMutation.isPending || createMutation.isPending}
-              />
+                      if (selectedId) {
+                        updateMutation.mutate(payload, {
+                          onSuccess: () => setIsEditing(false),
+                        });
+                      }
+                    }}
+                    onUploadImage={(file) => uploadMutation.mutate(file)}
+                    onRemoveImage={(imageId) => deleteImageMutation.mutate(imageId)}
+                    isSaving={updateMutation.isPending || createMutation.isPending}
+                  />
+                </div>
+              </>
             ) : selectedVehicle ? (
-              <div className="space-y-6">
-                <VehicleDetailsPanel
-                  vehicle={selectedVehicle}
-                  warnings={getVehicleWarnings(selectedVehicle).map(
-                    (warning) => warning.message
-                  )}
-                  onEdit={() => setIsEditing(true)}
-                  editDisabled={isEditing}
-                />
-                <VehicleDeleteDialog
-                  disabled={isEditing}
-                  onConfirm={() => {
-                    if (!selectedId) {
-                      return;
-                    }
-                    deleteMutation.mutate(selectedId, {
-                      onSuccess: () => setSelectedId(null),
-                    });
-                  }}
-                />
-              </div>
+              <>
+                <div className="flex-1 min-h-0 overflow-y-auto p-6">
+                  <VehicleDetailsPanel
+                    vehicle={selectedVehicle}
+                    warnings={getVehicleWarnings(selectedVehicle).map(
+                      (warning) => warning.message
+                    )}
+                    onEdit={() => setIsEditing(true)}
+                    editDisabled={isEditing}
+                  />
+                </div>
+                <div className="border-t border-border p-6">
+                  <VehicleDeleteDialog
+                    disabled={isEditing}
+                    onConfirm={() => {
+                      if (!selectedId) {
+                        return;
+                      }
+                      deleteMutation.mutate(selectedId, {
+                        onSuccess: () => setSelectedId(null),
+                      });
+                    }}
+                  />
+                </div>
+              </>
             ) : (
-              <div className="rounded-xl border border-dashed border-border p-6 text-sm text-muted-foreground">
+              <div className="p-6 text-sm text-muted-foreground">
                 Start filling out the form to add a new vehicle.
               </div>
             )
           ) : (
-            <div className="rounded-xl border border-dashed border-border p-6 text-sm text-muted-foreground">
+            <div className="p-6 text-sm text-muted-foreground">
               Select a vehicle to view details.
             </div>
           )}

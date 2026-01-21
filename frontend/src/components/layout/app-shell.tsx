@@ -15,16 +15,16 @@ export function AppShell({ children }: AppShellProps) {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <div className="min-h-screen bg-background text-foreground">
-        <div className="flex min-h-screen">
+      <div className="h-screen overflow-hidden bg-background text-foreground">
+        <div className="flex h-full">
           <Sidebar
             collapsed={collapsed}
             onToggle={() => setCollapsed((prev) => !prev)}
           />
-          <div className="flex min-h-screen flex-1 flex-col">
+          <div className="flex h-full min-h-0 flex-1 flex-col">
             <Header />
-            <main className="flex-1 px-8 py-6">
-              <div className="min-h-full rounded-2xl bg-card p-6 shadow-soft">
+            <main className="flex-1 min-h-0 overflow-hidden px-8 py-6">
+              <div className="flex h-full min-h-0 flex-col overflow-hidden rounded-2xl bg-card p-6 shadow-soft">
                 {children}
               </div>
             </main>
