@@ -7,7 +7,7 @@
 
 ## Summary
 
-Deliver a users page with a searchable table, selectable rows, and a fixed-width right-side details panel using the existing web + API stack and design style. Provide view and edit modes for user details (including image upload/remove), derived warnings, and seed the database with 5 users via a migration for demo data.
+Deliver a users page with a searchable table, selectable rows, and a fixed-width right-side details panel using the existing web + API stack and design style. Provide create/view/edit/delete for user details (including image upload/remove), derived warnings, and seed the database with 5 users via a migration for demo data.
 
 ## Technical Context
 

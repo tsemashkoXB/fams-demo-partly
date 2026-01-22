@@ -25,6 +25,22 @@ paths:
                 type: array
                 items:
                   $ref: "#/components/schemas/User"
+    post:
+      summary: Create user
+      description: Creates a new user record.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UserCreate"
+      responses:
+        "201":
+          description: User created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/User"
 
   /users/{userId}:
     get:
@@ -42,6 +58,18 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/User"
+    delete:
+      summary: Delete user
+      description: Deletes a user record.
+      parameters:
+        - in: path
+          name: userId
+          required: true
+          schema:
+            type: string
+      responses:
+        "204":
+          description: User deleted
 
   /users/{userId}/images:
     post:
@@ -143,6 +171,54 @@ components:
           type: array
           items:
             $ref: "#/components/schemas/UserImage"
+    UserCreate:
+      type: object
+      required:
+        - name
+        - surname
+        - status
+        - gender
+        - position
+      properties:
+        name:
+          type: string
+        surname:
+          type: string
+        status:
+          type: string
+          enum: [Active, Banned]
+        gender:
+          type: string
+          enum: [Male, Female]
+        position:
+          type: string
+          enum: [Sale, Merchandiser, Driver, House Master, Logistic, Courier]
+        dateOfBirth:
+          type: string
+          format: date
+          nullable: true
+        contractTerminationDate:
+          type: string
+          format: date
+          nullable: true
+        email:
+          type: string
+          nullable: true
+        phone:
+          type: string
+          nullable: true
+        drivingLicense:
+          type: string
+          nullable: true
+        drivingLicenseExpiresAt:
+          type: string
+          format: date
+          nullable: true
+        drivingCategories:
+          type: array
+          items:
+            type: string
+            enum: [AM, A, A1, B, C, D, BE, CE, DE]
     UserImage:
       type: object
       properties:

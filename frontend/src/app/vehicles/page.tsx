@@ -1,31 +1,31 @@
-"use client";
+'use client';
 
-import * as React from "react";
-import { VehicleAddButton } from "@/components/vehicles/vehicle-add-button";
-import { VehicleDeleteDialog } from "@/components/vehicles/vehicle-delete-dialog";
-import { VehicleDetailsPanel } from "@/components/vehicles/vehicle-details-panel";
+import * as React from 'react';
+import { VehicleAddButton } from '@/components/vehicles/vehicle-add-button';
+import { VehicleDeleteDialog } from '@/components/vehicles/vehicle-delete-dialog';
+import { VehicleDetailsPanel } from '@/components/vehicles/vehicle-details-panel';
 import {
   VehicleForm,
   buildVehicleFormValues,
-} from "@/components/vehicles/vehicle-form";
-import { VehiclesSearch } from "@/components/vehicles/vehicles-search";
-import { VehiclesEmptyState } from "@/components/vehicles/vehicles-empty-state";
-import { VehiclesTable } from "@/components/vehicles/vehicles-table";
+} from '@/components/vehicles/vehicle-form';
+import { VehiclesSearch } from '@/components/vehicles/vehicles-search';
+import { VehiclesEmptyState } from '@/components/vehicles/vehicles-empty-state';
+import { VehiclesTable } from '@/components/vehicles/vehicles-table';
 import {
   useVehicleDetailsQuery,
   useVehiclesQuery,
-} from "@/services/vehicles/queries";
-import { getVehicleWarnings } from "@/services/vehicles/warnings";
+} from '@/services/vehicles/queries';
+import { getVehicleWarnings } from '@/services/vehicles/warnings';
 import {
   useCreateVehicleMutation,
   useDeleteVehicleImageMutation,
   useDeleteVehicleMutation,
   useUpdateVehicleMutation,
   useUploadVehicleImageMutation,
-} from "@/services/vehicles/mutations";
+} from '@/services/vehicles/mutations';
 
 export default function VehiclesPage() {
-  const [search, setSearch] = React.useState("");
+  const [search, setSearch] = React.useState('');
   const [selectedId, setSelectedId] = React.useState<number | null>(null);
   const [isEditing, setIsEditing] = React.useState(false);
   const [isAdding, setIsAdding] = React.useState(false);
@@ -39,7 +39,9 @@ export default function VehiclesPage() {
       setSelectedId(null);
       return;
     }
-    const isSelectedInList = vehicles.some((vehicle) => vehicle.id === selectedId);
+    const isSelectedInList = vehicles.some(
+      (vehicle) => vehicle.id === selectedId,
+    );
     if (!isSelectedInList) {
       setSelectedId(vehicles[0].id);
     }
@@ -58,7 +60,7 @@ export default function VehiclesPage() {
     selectedVehicleDetails ??
     (selectedId === null
       ? null
-      : vehicles.find((vehicle) => vehicle.id === selectedId) ?? null);
+      : (vehicles.find((vehicle) => vehicle.id === selectedId) ?? null));
 
   const updateMutation = useUpdateVehicleMutation(selectedId ?? 0);
   const createMutation = useCreateVehicleMutation();
@@ -74,9 +76,9 @@ export default function VehiclesPage() {
   }, [isAdding, selectedVehicle]);
 
   const toNullableNumber = (value: string) =>
-    value.trim() === "" ? null : Number(value);
+    value.trim() === '' ? null : Number(value);
   const toNullableString = (value: string) =>
-    value.trim() === "" ? null : value;
+    value.trim() === '' ? null : value;
 
   return (
     <div className="relative flex h-full min-h-0 flex-col gap-6 overflow-hidden">
@@ -127,7 +129,7 @@ export default function VehiclesPage() {
 
         <aside
           className={`relative z-50 flex w-full max-w-full min-h-0 flex-col overflow-hidden rounded-2xl border border-border xl:max-w-[550px] xl:self-stretch ${
-            isEditing ? "bg-card shadow-lg" : "bg-muted/20"
+            isEditing ? 'bg-card shadow-lg' : 'bg-muted/20'
           }`}
         >
           {isDetailsLoading && selectedId ? (
@@ -153,29 +155,32 @@ export default function VehiclesPage() {
                         type: values.type,
                         yearOfProduction: Number(values.yearOfProduction),
                         vin: values.vin.trim(),
-                        currentMileage: toNullableNumber(values.currentMileage) ?? 0,
+                        currentMileage:
+                          toNullableNumber(values.currentMileage) ?? 0,
                         color: toNullableString(values.color),
                         engine: toNullableString(values.engine),
                         fuelType: toNullableString(values.fuelType),
                         payload: toNullableNumber(values.payload),
                         seats: toNullableNumber(values.seats),
                         fullMass: toNullableNumber(values.fullMass),
-                        vehiclePassport: toNullableString(values.vehiclePassport),
+                        vehiclePassport: toNullableString(
+                          values.vehiclePassport,
+                        ),
                         vehiclePassportIssuedDate: toNullableString(
-                          values.vehiclePassportIssuedDate
+                          values.vehiclePassportIssuedDate,
                         ),
                         insurance: toNullableString(values.insurance),
                         insuranceExpiresAt: toNullableString(
-                          values.insuranceExpiresAt
+                          values.insuranceExpiresAt,
                         ),
                         nextServiceAtMileage: toNullableNumber(
-                          values.nextServiceAtMileage
+                          values.nextServiceAtMileage,
                         ),
                         nextServiceTillDate: toNullableString(
-                          values.nextServiceTillDate
+                          values.nextServiceTillDate,
                         ),
                         stateInspectionExpiresAt: toNullableString(
-                          values.stateInspectionExpiresAt
+                          values.stateInspectionExpiresAt,
                         ),
                       };
 
@@ -197,8 +202,12 @@ export default function VehiclesPage() {
                       }
                     }}
                     onUploadImage={(file) => uploadMutation.mutate(file)}
-                    onRemoveImage={(imageId) => deleteImageMutation.mutate(imageId)}
-                    isSaving={updateMutation.isPending || createMutation.isPending}
+                    onRemoveImage={(imageId) =>
+                      deleteImageMutation.mutate(imageId)
+                    }
+                    isSaving={
+                      updateMutation.isPending || createMutation.isPending
+                    }
                   />
                 </div>
               </>
@@ -208,7 +217,7 @@ export default function VehiclesPage() {
                   <VehicleDetailsPanel
                     vehicle={selectedVehicle}
                     warnings={getVehicleWarnings(selectedVehicle).map(
-                      (warning) => warning.message
+                      (warning) => warning.message,
                     )}
                     onEdit={() => setIsEditing(true)}
                     editDisabled={isEditing}

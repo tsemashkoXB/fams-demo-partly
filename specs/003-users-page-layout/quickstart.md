@@ -33,3 +33,5 @@
 - Confirm missing fields render as empty input values.
 - Confirm multiple warnings can display at once when conditions apply.
 - Upload a user image and verify it renders in the details panel.
+- Delete a user via the confirmation prompt and verify the list updates.
+- Add a user via the Add User form and verify it appears in the list.

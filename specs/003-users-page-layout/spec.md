@@ -28,6 +28,8 @@ As a staff member, I can view a list of users and select any row to see that use
 1. **Given** the users page is open with at least one user, **When** I select a row, **Then** the selected row is visually highlighted and the right panel updates to show that user's details.
 2. **Given** the users page is open, **When** I open the page without making a selection, **Then** an empty-state details panel is shown so the layout remains stable.
 3. **Given** a user is selected, **When** I click Edit, **Then** the details panel switches to editable fields and I can save changes.
+4. **Given** a user is selected, **When** I confirm Delete, **Then** the user is removed from the list and the details panel clears.
+5. **Given** I click Add User, **When** I complete the form and save, **Then** the new user appears in the list and is selected.
 
 ---
 
@@ -71,6 +73,7 @@ As a staff member, I can view contact info, document details, and warnings for t
 
 - **FR-001**: The page MUST present a left list area and a right details panel, with the right panel fixed near 550px width.
 - **FR-002**: The left list MUST show a page title, search input, and an Add User button above the list.
+- **FR-002a**: Clicking Add User MUST open an editable form for a new user and allow saving.
 - **FR-003**: The list MUST include columns for avatar, name, position, date of birth, status, and alert indicator.
 - **FR-004**: Users MUST be able to select any row, with a visible selection state and details panel updates to the selected user.
 - **FR-005**: The search input MUST filter the list by case-insensitive substring matches on any visible column value.
@@ -83,6 +86,8 @@ As a staff member, I can view contact info, document details, and warnings for t
 - **FR-008b**: Clicking Edit MUST switch the details panel into an editable form mode for all user fields.
 - **FR-008c**: Users MUST be able to save edits to any field and see updates reflected in the list and details panel.
 - **FR-008d**: All editable fields MUST validate inline with clear, field-level error messages.
+- **FR-008e**: Users MUST be able to delete a user after a confirmation prompt, and the list/details MUST update accordingly.
+- **FR-008f**: Users MUST be able to create a new user and see it reflected in the list and details panel.
 - **FR-009**: Status, gender, position, date of birth, and contract termination MUST appear as non-editable input-style fields.
 - **FR-010**: A Contacts section MUST present email and phone as non-editable input-style fields in two columns.
 - **FR-010a**: If a field value is missing, its input-style field MUST remain visible but empty.
@@ -115,5 +120,4 @@ As a staff member, I can view contact info, document details, and warnings for t
 
 ## Assumptions
 
-- The Add User button is present in the layout but does not require functional behavior beyond visibility for this feature.
 - When the list is non-empty, the first user is selected by default; otherwise, an empty-state panel is shown.
