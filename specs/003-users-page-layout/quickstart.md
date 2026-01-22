@@ -35,3 +35,10 @@
 - Upload a user image and verify it renders in the details panel.
 - Delete a user via the confirmation prompt and verify the list updates.
 - Add a user via the Add User form and verify it appears in the list.
+
+## E2E test: user creation flow
+
+1. Ensure the backend is running and `DATABASE_URL` is configured.
+2. Run the e2e test (targets the running backend):
+   - `cd /Users/tanya/Documents/XBS/fams-demo-partly/backend && E2E_BASE_URL=http://localhost:3000 npm run test:e2e`
+3. Confirm the test passes and the created user is deleted at the end.

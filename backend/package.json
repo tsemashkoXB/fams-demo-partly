@@ -14,7 +14,8 @@
     "start:prod": "node dist/main",
     "lint": "eslint \"src/**/*.ts\" --fix",
     "migrate": "ts-node src/migrations/run.ts up",
-    "migrate:down": "ts-node src/migrations/run.ts down"
+    "migrate:down": "ts-node src/migrations/run.ts down",
+    "test:e2e": "node --test test/**/*.e2e.test.mjs"
   },
   "dependencies": {
     "@nestjs/common": "^11.0.1",
