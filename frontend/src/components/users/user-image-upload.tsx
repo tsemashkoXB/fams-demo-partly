@@ -7,6 +7,8 @@ type UserImageUploadProps = {
   onUpload: (file: File) => void;
   onRemove: (imageId: number) => void;
   disabled?: boolean;
+  pendingPreviewUrl?: string;
+  onClearPending?: () => void;
 };
 
 function getPrimaryImage(images?: UserImage[]): UserImage | null {
@@ -23,6 +25,8 @@ export function UserImageUpload({
   onUpload,
   onRemove,
   disabled = false,
+  pendingPreviewUrl,
+  onClearPending,
 }: UserImageUploadProps) {
   const primaryImage = getPrimaryImage(images);
   const apiBaseUrl =
@@ -32,6 +36,8 @@ export function UserImageUpload({
       ? primaryImage.relativePath
       : `${apiBaseUrl}/${primaryImage.relativePath}`
     : "";
+
+  const hasPending = Boolean(pendingPreviewUrl) && !primaryImage;
 
   return (
     <div className="space-y-3">
@@ -51,6 +57,27 @@ export function UserImageUpload({
             >
               ✕
             </button>
+          </>
+        ) : hasPending ? (
+          <>
+            <img
+              src={pendingPreviewUrl}
+              alt="Pending upload"
+              className="h-full w-full object-cover"
+            />
+            {onClearPending && (
+              <button
+                type="button"
+                className="absolute right-3 top-3 rounded-full bg-background/90 px-2 text-xs shadow"
+                disabled={disabled}
+                onClick={onClearPending}
+              >
+                ✕
+              </button>
+            )}
+            <span className="absolute left-3 top-3 rounded-full bg-background/90 px-2 py-1 text-xs text-muted-foreground shadow">
+              Pending
+            </span>
           </>
         ) : (
           <span className="text-sm text-muted-foreground">No image</span>

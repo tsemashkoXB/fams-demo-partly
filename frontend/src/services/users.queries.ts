@@ -58,7 +58,26 @@ export function useUploadUserImageMutation(userId: number) {
 
   return useMutation({
     mutationFn: (file: File) => uploadUserImage(userId, file),
-    onSuccess: () => {
+    onSuccess: (newImage: UserImage) => {
+      const appendImage = (images?: UserImage[]) => {
+        const next = images ? [...images, newImage] : [newImage];
+        return next.sort((a, b) => b.displayOrder - a.displayOrder);
+      };
+
+      queryClient.setQueryData<User>(['user', userId], (current) =>
+        current ? { ...current, images: appendImage(current.images) } : current
+      );
+
+      queryClient.setQueryData<User[]>(['users'], (current) =>
+        current
+          ? current.map((user) =>
+              user.id === userId
+                ? { ...user, images: appendImage(user.images) }
+                : user
+            )
+          : current
+      );
+
       queryClient.invalidateQueries({ queryKey: ['user', userId] });
       queryClient.invalidateQueries({ queryKey: ['users'] });
     },

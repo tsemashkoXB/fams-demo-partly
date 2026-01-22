@@ -1,6 +1,7 @@
 'use client';
 
 import * as React from 'react';
+import { useQueryClient } from '@tanstack/react-query';
 import { VehicleAddButton } from '@/components/vehicles/vehicle-add-button';
 import { VehicleDeleteDialog } from '@/components/vehicles/vehicle-delete-dialog';
 import { VehicleDetailsPanel } from '@/components/vehicles/vehicle-details-panel';
@@ -16,11 +17,13 @@ import {
   useVehiclesQuery,
 } from '@/services/vehicles/queries';
 import { getVehicleWarnings } from '@/services/vehicles/warnings';
+import type { Vehicle, VehicleImage } from '@/services/vehicles/queries';
 import {
   useCreateVehicleMutation,
   useDeleteVehicleImageMutation,
   useDeleteVehicleMutation,
   useUpdateVehicleMutation,
+  uploadVehicleImage,
   useUploadVehicleImageMutation,
 } from '@/services/vehicles/mutations';
 
@@ -29,6 +32,36 @@ export default function VehiclesPage() {
   const [selectedId, setSelectedId] = React.useState<number | null>(null);
   const [isEditing, setIsEditing] = React.useState(false);
   const [isAdding, setIsAdding] = React.useState(false);
+  const [pendingImageFile, setPendingImageFile] = React.useState<File | null>(
+    null,
+  );
+  const [pendingImageUrl, setPendingImageUrl] = React.useState<string>('');
+  const skipEditResetRef = React.useRef(false);
+  const queryClient = useQueryClient();
+
+  const appendImage = React.useCallback(
+    (vehicleId: number, image: VehicleImage) => {
+      const append = (images?: VehicleImage[]) => {
+        const next = images ? [...images, image] : [image];
+        return next.sort((a, b) => b.displayOrder - a.displayOrder);
+      };
+
+      queryClient.setQueryData<Vehicle>(['vehicle', vehicleId], (current) =>
+        current ? { ...current, images: append(current.images) } : current
+      );
+
+      queryClient.setQueryData<Vehicle[]>(['vehicles'], (current) =>
+        current
+          ? current.map((vehicle) =>
+              vehicle.id === vehicleId
+                ? { ...vehicle, images: append(vehicle.images) }
+                : vehicle
+            )
+          : current
+      );
+    },
+    [queryClient]
+  );
   const { data: vehicles = [], isLoading, isError } = useVehiclesQuery(search);
 
   React.useEffect(() => {
@@ -49,9 +82,23 @@ export default function VehiclesPage() {
 
   React.useEffect(() => {
     if (!isAdding) {
+      if (skipEditResetRef.current) {
+        skipEditResetRef.current = false;
+        return;
+      }
       setIsEditing(false);
     }
   }, [isAdding, selectedId]);
+
+  React.useEffect(() => {
+    if (!pendingImageFile) {
+      setPendingImageUrl('');
+      return;
+    }
+    const objectUrl = URL.createObjectURL(pendingImageFile);
+    setPendingImageUrl(objectUrl);
+    return () => URL.revokeObjectURL(objectUrl);
+  }, [pendingImageFile]);
 
   const { data: selectedVehicleDetails, isLoading: isDetailsLoading } =
     useVehicleDetailsQuery(selectedId ?? undefined);
@@ -140,15 +187,18 @@ export default function VehiclesPage() {
             isEditing ? (
               <>
                 <div className="flex-1 min-h-0 overflow-y-auto p-6">
-                  <VehicleForm
-                    initialValues={formValues}
-                    images={selectedVehicle?.images}
-                    imagesDisabled={isAdding}
-                    onCancel={() => {
-                      setIsEditing(false);
-                      setIsAdding(false);
-                    }}
-                    onSave={(values) => {
+                <VehicleForm
+                  initialValues={formValues}
+                  images={selectedVehicle?.images}
+                  imagesDisabled={false}
+                  pendingPreviewUrl={pendingImageUrl}
+                  onClearPendingImage={() => setPendingImageFile(null)}
+                  onCancel={() => {
+                    setIsEditing(false);
+                    setIsAdding(false);
+                    setPendingImageFile(null);
+                  }}
+                  onSave={(values) => {
                       const payload = {
                         plateNumber: values.plateNumber.trim(),
                         modelName: values.modelName.trim(),
@@ -186,10 +236,25 @@ export default function VehiclesPage() {
 
                       if (isAdding) {
                         createMutation.mutate(payload, {
-                          onSuccess: (created) => {
+                          onSuccess: async (created) => {
+                            skipEditResetRef.current = true;
                             setSelectedId(created.id);
                             setIsAdding(false);
-                            setIsEditing(false);
+                            setIsEditing(true);
+                            if (pendingImageFile) {
+                              const image = await uploadVehicleImage(
+                                created.id,
+                                pendingImageFile,
+                              );
+                              appendImage(created.id, image);
+                              queryClient.invalidateQueries({
+                                queryKey: ['vehicle', created.id],
+                              });
+                              queryClient.invalidateQueries({
+                                queryKey: ['vehicles'],
+                              });
+                              setPendingImageFile(null);
+                            }
                           },
                         });
                         return;
@@ -201,7 +266,13 @@ export default function VehiclesPage() {
                         });
                       }
                     }}
-                    onUploadImage={(file) => uploadMutation.mutate(file)}
+                    onUploadImage={(file) => {
+                      if (isAdding) {
+                        setPendingImageFile(file);
+                        return;
+                      }
+                      uploadMutation.mutate(file);
+                    }}
                     onRemoveImage={(imageId) =>
                       deleteImageMutation.mutate(imageId)
                     }

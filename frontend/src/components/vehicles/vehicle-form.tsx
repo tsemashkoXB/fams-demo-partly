@@ -26,6 +26,8 @@ type VehicleFormProps = {
   onRemoveImage: (imageId: number) => void;
   isSaving?: boolean;
   imagesDisabled?: boolean;
+  pendingPreviewUrl?: string;
+  onClearPendingImage?: () => void;
 };
 
 type FieldProps = {
@@ -129,7 +131,7 @@ function DatePickerField({
         value={value}
         onChange={(nextValue) => onChange(name, nextValue)}
         disabled={disabled}
-        placeholder={label}
+        placeholder="dd.MM.yyyy"
       />
       {error && <span className="text-xs text-destructive">{error}</span>}
     </label>
@@ -145,6 +147,8 @@ export function VehicleForm({
   onRemoveImage,
   isSaving = false,
   imagesDisabled = false,
+  pendingPreviewUrl,
+  onClearPendingImage,
 }: VehicleFormProps) {
   const [values, setValues] = React.useState<VehicleFormValues>(initialValues);
   const [errors, setErrors] = React.useState<VehicleFormErrors>({});
@@ -191,6 +195,8 @@ export function VehicleForm({
             onUpload={onUploadImage}
             onRemove={onRemoveImage}
             disabled={imagesDisabled}
+            pendingPreviewUrl={pendingPreviewUrl}
+            onClearPending={onClearPendingImage}
           />
           <div className="space-y-3">
             <Field

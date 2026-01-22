@@ -1,6 +1,7 @@
 'use client';
 
 import * as React from 'react';
+import { useQueryClient } from '@tanstack/react-query';
 import { UsersSearch } from '@/components/users/users-search';
 import { UsersTable } from '@/components/users/users-table';
 import { UserDeleteDialog } from '@/components/users/user-delete-dialog';
@@ -18,6 +19,8 @@ import {
   useUserDetailsQuery,
   useUsersQuery,
 } from '@/services/users.queries';
+import { uploadUserImage } from '@/services/user-images';
+import type { User, UserImage } from '@/services/users';
 
 export default function UsersPage() {
   const [searchInput, setSearchInput] = React.useState('');
@@ -25,6 +28,36 @@ export default function UsersPage() {
   const [selectedId, setSelectedId] = React.useState<number | null>(null);
   const [isEditing, setIsEditing] = React.useState(false);
   const [isAdding, setIsAdding] = React.useState(false);
+  const [pendingImageFile, setPendingImageFile] = React.useState<File | null>(
+    null,
+  );
+  const [pendingImageUrl, setPendingImageUrl] = React.useState<string>('');
+  const skipEditResetRef = React.useRef(false);
+  const queryClient = useQueryClient();
+
+  const appendImage = React.useCallback(
+    (userId: number, image: UserImage) => {
+      const append = (images?: UserImage[]) => {
+        const next = images ? [...images, image] : [image];
+        return next.sort((a, b) => b.displayOrder - a.displayOrder);
+      };
+
+      queryClient.setQueryData<User>(['user', userId], (current) =>
+        current ? { ...current, images: append(current.images) } : current
+      );
+
+      queryClient.setQueryData<User[]>(['users'], (current) =>
+        current
+          ? current.map((user) =>
+              user.id === userId
+                ? { ...user, images: append(user.images) }
+                : user
+            )
+          : current
+      );
+    },
+    [queryClient]
+  );
   const { data: users = [], isLoading, isError } = useUsersQuery(search);
 
   React.useEffect(() => {
@@ -50,9 +83,23 @@ export default function UsersPage() {
 
   React.useEffect(() => {
     if (!isAdding) {
+      if (skipEditResetRef.current) {
+        skipEditResetRef.current = false;
+        return;
+      }
       setIsEditing(false);
     }
   }, [isAdding, selectedId]);
+
+  React.useEffect(() => {
+    if (!pendingImageFile) {
+      setPendingImageUrl('');
+      return;
+    }
+    const objectUrl = URL.createObjectURL(pendingImageFile);
+    setPendingImageUrl(objectUrl);
+    return () => URL.revokeObjectURL(objectUrl);
+  }, [pendingImageFile]);
 
   const { data: selectedUserDetails, isLoading: isDetailsLoading } =
     useUserDetailsQuery(selectedId ?? undefined);
@@ -147,9 +194,12 @@ export default function UsersPage() {
                 <UserEditForm
                   initialValues={formValues}
                   images={selectedUser?.images}
+                  pendingPreviewUrl={pendingImageUrl}
+                  onClearPendingImage={() => setPendingImageFile(null)}
                   onCancel={() => {
                     setIsEditing(false);
                     setIsAdding(false);
+                    setPendingImageFile(null);
                   }}
                   onSave={(values) => {
                     const payload = {
@@ -173,10 +223,25 @@ export default function UsersPage() {
 
                     if (isAdding) {
                       createMutation.mutate(payload, {
-                        onSuccess: (created) => {
+                        onSuccess: async (created) => {
+                          skipEditResetRef.current = true;
                           setSelectedId(created.id);
                           setIsAdding(false);
-                          setIsEditing(false);
+                          setIsEditing(true);
+                          if (pendingImageFile) {
+                            const image = await uploadUserImage(
+                              created.id,
+                              pendingImageFile
+                            );
+                            appendImage(created.id, image);
+                            queryClient.invalidateQueries({
+                              queryKey: ['user', created.id],
+                            });
+                            queryClient.invalidateQueries({
+                              queryKey: ['users'],
+                            });
+                            setPendingImageFile(null);
+                          }
                         },
                       });
                       return;
@@ -190,14 +255,20 @@ export default function UsersPage() {
                       onSuccess: () => setIsEditing(false),
                     });
                   }}
-                  onUploadImage={(file) => uploadMutation.mutate(file)}
+                  onUploadImage={(file) => {
+                    if (isAdding) {
+                      setPendingImageFile(file);
+                      return;
+                    }
+                    uploadMutation.mutate(file);
+                  }}
                   onRemoveImage={(imageId) =>
                     deleteImageMutation.mutate(imageId)
                   }
                   isSaving={
                     updateMutation.isPending || createMutation.isPending
                   }
-                  imagesDisabled={isAdding}
+                  imagesDisabled={false}
                 />
               </div>
             ) : (

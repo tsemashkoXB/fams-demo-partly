@@ -1,7 +1,7 @@
 "use client";
 
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import type { Vehicle } from "@/services/vehicles/queries";
+import type { Vehicle, VehicleImage } from "@/services/vehicles/queries";
 
 export type VehicleUpdateInput = Partial<
   Omit<Vehicle, "id" | "createdAt" | "updatedAt" | "images">
@@ -22,6 +22,19 @@ async function fetchJson<T>(url: string, options?: RequestInit): Promise<T> {
     throw new Error(`Request failed: ${response.status}`);
   }
   return response.json() as Promise<T>;
+}
+
+export async function uploadVehicleImage(
+  vehicleId: number,
+  file: File
+): Promise<VehicleImage> {
+  const baseUrl = getApiBaseUrl();
+  const formData = new FormData();
+  formData.append("file", file);
+  return fetchJson(`${baseUrl}/vehicles/${vehicleId}/images`, {
+    method: "POST",
+    body: formData,
+  });
 }
 
 export function useUpdateVehicleMutation(vehicleId: number) {

@@ -8,6 +8,8 @@ type VehicleImagesEditorProps = {
   onUpload: (file: File) => void;
   onRemove: (imageId: number) => void;
   disabled?: boolean;
+  pendingPreviewUrl?: string;
+  onClearPending?: () => void;
 };
 
 export function VehicleImagesEditor({
@@ -15,6 +17,8 @@ export function VehicleImagesEditor({
   onUpload,
   onRemove,
   disabled = false,
+  pendingPreviewUrl,
+  onClearPending,
 }: VehicleImagesEditorProps) {
   const [index, setIndex] = React.useState(0);
   const hasMultiple = images.length > 1;
@@ -31,6 +35,8 @@ export function VehicleImagesEditor({
   React.useEffect(() => {
     setIndex(0);
   }, [images.length]);
+
+  const hasPending = Boolean(pendingPreviewUrl) && !image;
 
   return (
     <div className="space-y-3">
@@ -50,6 +56,27 @@ export function VehicleImagesEditor({
             >
               ✕
             </button>
+          </>
+        ) : hasPending ? (
+          <>
+            <img
+              src={pendingPreviewUrl}
+              alt="Pending upload"
+              className="h-full w-full object-cover"
+            />
+            {onClearPending && (
+              <button
+                type="button"
+                className="absolute right-3 top-3 rounded-full bg-background/90 px-2 text-xs shadow"
+                disabled={disabled}
+                onClick={onClearPending}
+              >
+                ✕
+              </button>
+            )}
+            <span className="absolute left-3 top-3 rounded-full bg-background/90 px-2 py-1 text-xs text-muted-foreground shadow">
+              Pending
+            </span>
           </>
         ) : (
           <span className="text-sm text-muted-foreground">No images</span>

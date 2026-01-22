@@ -48,6 +48,8 @@ type UserEditFormProps = {
   onRemoveImage: (imageId: number) => void;
   isSaving?: boolean;
   imagesDisabled?: boolean;
+  pendingPreviewUrl?: string;
+  onClearPendingImage?: () => void;
 };
 
 type FieldProps = {
@@ -137,7 +139,11 @@ function DateField({ label, name, value, error, onChange }: DateFieldProps) {
   return (
     <label className="flex flex-col gap-1 text-xs text-muted-foreground">
       <span>{label}</span>
-      <DatePicker value={value} onChange={(nextValue) => onChange(name, nextValue)} />
+      <DatePicker
+        value={value}
+        onChange={(nextValue) => onChange(name, nextValue)}
+        placeholder="dd.MM.yyyy"
+      />
       {error && <span className="text-xs text-destructive">{error}</span>}
     </label>
   );
@@ -169,6 +175,8 @@ export function UserEditForm({
   onRemoveImage,
   isSaving = false,
   imagesDisabled = false,
+  pendingPreviewUrl,
+  onClearPendingImage,
 }: UserEditFormProps) {
   const [values, setValues] = React.useState<UserFormValues>(initialValues);
   const [errors, setErrors] = React.useState<UserFormErrors>({});
@@ -217,6 +225,8 @@ export function UserEditForm({
             onUpload={onUploadImage}
             onRemove={onRemoveImage}
             disabled={isSaving || imagesDisabled}
+            pendingPreviewUrl={pendingPreviewUrl}
+            onClearPending={onClearPendingImage}
           />
           <div className="space-y-3">
             <div className="grid gap-3 md:grid-cols-2">
