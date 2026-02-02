@@ -1,0 +1,14 @@
+erDiagram
+    USER {}
+    VEHICLE {}
+    BOOKING {
+        int id PK
+        int user_id FK
+        int vehicle_id FK
+        enum status "In work, Service"
+        datetime start_time
+        datetime end_time
+        string description
+    }
+    USER ||--o{ BOOKING : "books"
+    VEHICLE ||--o{ BOOKING : "is booked in"

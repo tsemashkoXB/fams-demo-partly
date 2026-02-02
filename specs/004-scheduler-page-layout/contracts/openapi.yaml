@@ -1,0 +1,408 @@
+openapi: 3.0.3
+info:
+  title: FAMS Scheduler API
+  description: API for managing vehicle bookings in the Fleet Autopark Management System
+  version: 1.0.0
+
+servers:
+  - url: http://localhost:3001
+    description: Local development server
+
+tags:
+  - name: Bookings
+    description: Booking management endpoints
+
+paths:
+  /bookings:
+    get:
+      tags: [Bookings]
+      summary: List bookings
+      description: |
+        Retrieve bookings with optional filtering.
+        Returns bookings with joined vehicle and user data.
+      parameters:
+        - name: vehicleId
+          in: query
+          schema:
+            type: integer
+          description: Filter by vehicle ID
+        - name: userId
+          in: query
+          schema:
+            type: integer
+          description: Filter by assigned user ID
+        - name: status
+          in: query
+          schema:
+            type: string
+            enum: [In work, Service]
+          description: Filter by booking status
+        - name: startDate
+          in: query
+          schema:
+            type: string
+            format: date-time
+          description: Filter bookings starting from this date
+        - name: endDate
+          in: query
+          schema:
+            type: string
+            format: date-time
+          description: Filter bookings ending before this date
+        - name: availableOnly
+          in: query
+          schema:
+            type: boolean
+            default: false
+          description: |
+            When true with startDate and endDate, returns only vehicles 
+            that have NO bookings during the specified period
+      responses:
+        '200':
+          description: List of bookings
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/BookingWithDetails'
+
+    post:
+      tags: [Bookings]
+      summary: Create a new booking
+      description: |
+        Create a new booking. Returns 409 Conflict if the booking 
+        overlaps with an existing booking for the same vehicle.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateBookingDto'
+      responses:
+        '201':
+          description: Booking created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BookingWithDetails'
+        '400':
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+        '409':
+          description: Time conflict with existing booking
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConflictError'
+
+  /bookings/{id}:
+    parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+        description: Booking ID
+
+    get:
+      tags: [Bookings]
+      summary: Get booking by ID
+      responses:
+        '200':
+          description: Booking details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BookingWithDetails'
+        '404':
+          description: Booking not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+
+    put:
+      tags: [Bookings]
+      summary: Update a booking
+      description: |
+        Update an existing booking. Returns 409 Conflict if the updated 
+        time range overlaps with another booking for the same vehicle.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateBookingDto'
+      responses:
+        '200':
+          description: Booking updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BookingWithDetails'
+        '400':
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+        '404':
+          description: Booking not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+        '409':
+          description: Time conflict with existing booking
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConflictError'
+
+    delete:
+      tags: [Bookings]
+      summary: Delete a booking
+      responses:
+        '204':
+          description: Booking deleted successfully
+        '404':
+          description: Booking not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+
+  /bookings/available-vehicles:
+    get:
+      tags: [Bookings]
+      summary: Get vehicles available during a period
+      description: |
+        Returns vehicles that have no bookings overlapping the specified
+        time range. Used for the "Available during the period" filter.
+      parameters:
+        - name: startDate
+          in: query
+          required: true
+          schema:
+            type: string
+            format: date-time
+          description: Start of availability period
+        - name: endDate
+          in: query
+          required: true
+          schema:
+            type: string
+            format: date-time
+          description: End of availability period
+      responses:
+        '200':
+          description: List of available vehicle IDs
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  vehicleIds:
+                    type: array
+                    items:
+                      type: integer
+                    description: IDs of vehicles available during the period
+
+components:
+  schemas:
+    Booking:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        vehicleId:
+          type: integer
+          example: 1
+        userId:
+          type: integer
+          example: 1
+        status:
+          type: string
+          enum: [In work, Service]
+          example: In work
+        startTime:
+          type: string
+          format: date-time
+          example: '2026-02-02T09:00:00Z'
+        endTime:
+          type: string
+          format: date-time
+          example: '2026-02-02T17:00:00Z'
+        description:
+          type: string
+          nullable: true
+          example: Delivery to downtown warehouse
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+      required:
+        - id
+        - vehicleId
+        - userId
+        - status
+        - startTime
+        - endTime
+        - createdAt
+        - updatedAt
+
+    BookingWithDetails:
+      allOf:
+        - $ref: '#/components/schemas/Booking'
+        - type: object
+          properties:
+            vehicle:
+              type: object
+              properties:
+                id:
+                  type: integer
+                plateNumber:
+                  type: string
+                  example: AA-1010
+                modelName:
+                  type: string
+                  example: Transit 250
+                type:
+                  type: string
+                  enum: [PC, Pass Van, Van, CV, Bus]
+                  example: Van
+              required:
+                - id
+                - plateNumber
+                - modelName
+                - type
+            user:
+              type: object
+              properties:
+                id:
+                  type: integer
+                name:
+                  type: string
+                  example: Elena
+                surname:
+                  type: string
+                  example: Kravtsov
+              required:
+                - id
+                - name
+                - surname
+          required:
+            - vehicle
+            - user
+
+    CreateBookingDto:
+      type: object
+      properties:
+        vehicleId:
+          type: integer
+          example: 1
+        userId:
+          type: integer
+          example: 1
+        status:
+          type: string
+          enum: [In work, Service]
+          default: In work
+        startTime:
+          type: string
+          format: date-time
+          example: '2026-02-02T09:00:00Z'
+        endTime:
+          type: string
+          format: date-time
+          example: '2026-02-02T17:00:00Z'
+        description:
+          type: string
+          nullable: true
+          example: Delivery task
+      required:
+        - vehicleId
+        - userId
+        - startTime
+        - endTime
+
+    UpdateBookingDto:
+      type: object
+      properties:
+        vehicleId:
+          type: integer
+        userId:
+          type: integer
+        status:
+          type: string
+          enum: [In work, Service]
+        startTime:
+          type: string
+          format: date-time
+        endTime:
+          type: string
+          format: date-time
+        description:
+          type: string
+          nullable: true
+
+    ValidationError:
+      type: object
+      properties:
+        statusCode:
+          type: integer
+          example: 400
+        message:
+          type: array
+          items:
+            type: string
+          example:
+            - vehicleId must be a positive integer
+            - endTime must be after startTime
+        error:
+          type: string
+          example: Bad Request
+
+    ConflictError:
+      type: object
+      properties:
+        statusCode:
+          type: integer
+          example: 409
+        message:
+          type: string
+          example: 'Time conflict: Vehicle is already booked from 2026-02-02T08:00:00Z to 2026-02-02T12:00:00Z'
+        error:
+          type: string
+          example: Conflict
+        conflictingBooking:
+          type: object
+          properties:
+            id:
+              type: integer
+            startTime:
+              type: string
+              format: date-time
+            endTime:
+              type: string
+              format: date-time
+
+    NotFoundError:
+      type: object
+      properties:
+        statusCode:
+          type: integer
+          example: 404
+        message:
+          type: string
+          example: Booking not found
+        error:
+          type: string
+          example: Not Found
