@@ -1,3 +1,8 @@
+'use client';
+
+import * as React from 'react';
+import { SchedulerLayout } from '@/components/scheduler/scheduler-layout';
+
 export default function SchedulerPage() {
-  return <div className="h-full w-full" />;
+  return <SchedulerLayout />;
 }

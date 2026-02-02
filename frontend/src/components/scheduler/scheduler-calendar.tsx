@@ -6,10 +6,13 @@ import { DayPicker } from 'react-day-picker';
 import { format } from 'date-fns';
 import { cn } from '@/lib/utils';
 
-export type CalendarProps = React.ComponentProps<typeof DayPicker>;
+interface SchedulerCalendarProps {
+  selected?: Date;
+  onSelect: (date: Date) => void;
+}
 
 /**
- * Calendar component styled according to Figma design
+ * Calendar component styled according to Figma design (node-id=1-92)
  *
  * Design tokens:
  * - Container: 8px border radius, 24px padding, gradient background with blur
@@ -22,10 +25,21 @@ export type CalendarProps = React.ComponentProps<typeof DayPicker>;
  * - Gap between rows: 8px
  * - Cell size: 30x30px
  */
-export function Calendar({ className, ...props }: CalendarProps) {
+export function SchedulerCalendar({
+  selected,
+  onSelect,
+}: SchedulerCalendarProps) {
+  const [month, setMonth] = React.useState(selected ?? new Date());
+
+  const handleSelect = (date: Date | undefined) => {
+    if (date) {
+      onSelect(date);
+    }
+  };
+
   return (
     <div
-      className={cn('relative overflow-hidden rounded-lg p-6', className)}
+      className="relative overflow-hidden rounded-lg p-3"
       style={{
         background:
           'radial-gradient(circle at 15% 21%, rgba(224, 249, 255, 0.2) 0%, rgba(110, 191, 244, 0.04) 77%, rgba(70, 144, 212, 0) 100%)',
@@ -47,39 +61,44 @@ export function Calendar({ className, ...props }: CalendarProps) {
         }}
       />
       <DayPicker
+        mode="single"
+        selected={selected}
+        onSelect={handleSelect}
+        month={month}
+        onMonthChange={setMonth}
         showOutsideDays={false}
         weekStartsOn={0}
         classNames={{
           root: 'w-full',
-          months: 'flex flex-col gap-[22px]',
-          month: 'flex flex-col gap-4',
+          months: 'flex flex-col gap-3',
+          month: 'flex flex-col gap-2',
           month_caption: 'flex justify-between items-center',
-          caption_label: 'text-[14px] font-semibold text-[#333333]',
-          nav: 'flex items-center gap-1',
+          caption_label: 'text-[13px] font-semibold text-[#333333]',
+          nav: 'flex items-center gap-0.5',
           button_previous: cn(
-            'h-6 w-6 bg-transparent p-0 opacity-70 hover:opacity-100',
+            'h-5 w-5 bg-transparent p-0 opacity-70 hover:opacity-100',
             'inline-flex items-center justify-center rounded-md',
             'transition-opacity cursor-pointer border-0',
           ),
           button_next: cn(
-            'h-6 w-6 bg-transparent p-0 opacity-70 hover:opacity-100',
+            'h-5 w-5 bg-transparent p-0 opacity-70 hover:opacity-100',
             'inline-flex items-center justify-center rounded-md',
             'transition-opacity cursor-pointer border-0',
           ),
           month_grid: 'w-full border-collapse',
-          weekdays: 'flex gap-2',
+          weekdays: 'flex justify-between',
           weekday: cn(
-            'w-[30px] text-[10px] font-semibold uppercase tracking-[0.15em] text-[#828282]',
+            'w-[30px] text-[9px] font-semibold uppercase tracking-[0.1em] text-[#828282]',
             'flex items-center justify-center',
           ),
-          weeks: 'flex flex-col gap-2',
-          week: 'flex gap-2',
+          weeks: 'flex flex-col gap-1',
+          week: 'flex justify-between',
           day: cn(
             'relative h-[30px] w-[30px] p-0 text-center',
             'focus-within:relative focus-within:z-20',
           ),
           day_button: cn(
-            'h-[30px] w-[30px] p-0 text-[16px] font-semibold text-[#4A5660]',
+            'h-[30px] w-[30px] p-0 text-[14px] font-semibold text-[#4A5660]',
             'flex items-center justify-center rounded-full',
             'hover:bg-[#2F6FED]/10 hover:text-[#2F6FED]',
             'focus:outline-none focus-visible:outline-none',
@@ -97,9 +116,9 @@ export function Calendar({ className, ...props }: CalendarProps) {
         components={{
           Chevron: ({ orientation }) =>
             orientation === 'left' ? (
-              <ChevronLeft className="h-4 w-4 text-[#333333]" />
+              <ChevronLeft className="h-3.5 w-3.5 text-[#333333]" />
             ) : (
-              <ChevronRight className="h-4 w-4 text-[#333333]" />
+              <ChevronRight className="h-3.5 w-3.5 text-[#333333]" />
             ),
         }}
         formatters={{
@@ -107,7 +126,6 @@ export function Calendar({ className, ...props }: CalendarProps) {
           formatWeekdayName: (date) =>
             format(date, 'EEE').toUpperCase().slice(0, 3),
         }}
-        {...props}
       />
     </div>
   );
